@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/test/test",
+    "pages/cate/cate",
+    "pages/my/my"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "智能垃圾分类",
+    "navigationBarBackgroundColor": "#00cb79"
+  },
+  "tabBar": {
+    "selectedColor": "#C00000",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "static/picture/home.png",
+        "selectedIconPath": "static/picture/home-active.png"
+      },
+      {
+        "pagePath": "pages/cate/cate",
+        "text": "分类",
+        "iconPath": "static/picture/cate.png",
+        "selectedIconPath": "static/picture/cate-active.png"
+      },
+      {
+        "pagePath": "pages/test/test",
+        "text": "考试",
+        "iconPath": "static/picture/博士帽1.png",
+        "selectedIconPath": "static/picture/博士帽 (2).png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/picture/my.png",
+        "selectedIconPath": "static/picture/my-active.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

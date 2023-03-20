@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.4.26",
+    "@escook/request-miniprogram": "^0.2.1"
+  },
+  "devDependencies": {
+    "sass": "^1.59.3",
+    "sass-loader": "^10.1.1"
+  }
+}

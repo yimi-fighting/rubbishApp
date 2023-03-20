@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "rubbish-detail": "/components/rubbishDetail/rubbishDetail"
+  },
+  "component": true
+}
