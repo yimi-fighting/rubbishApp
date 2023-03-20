@@ -79,8 +79,8 @@ __webpack_require__.r(__webpack_exports__);
 var components
 try {
   components = {
-    rubbishDetail: function () {
-      return __webpack_require__.e(/*! import() | components/rubbishDetail/rubbishDetail */ "components/rubbishDetail/rubbishDetail").then(__webpack_require__.bind(null, /*! @/components/rubbishDetail/rubbishDetail.vue */ 72))
+    uniPopup: function () {
+      return __webpack_require__.e(/*! import() | uni_modules/uni-popup/components/uni-popup/uni-popup */ "uni_modules/uni-popup/components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/uni_modules/uni-popup/components/uni-popup/uni-popup.vue */ 100))
     },
   }
 } catch (e) {
@@ -154,6 +154,14 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "list",
   data: function data() {
@@ -161,32 +169,29 @@ var _default = {
       list: [{
         id: 1,
         name: '吃剩的快餐饭菜',
-        class: '餐厨垃圾'
+        class: '其他垃圾'
       }, {
         id: 2,
         name: '菜头菜尾',
-        class: '餐厨垃圾'
+        class: '厨余垃圾'
       }, {
         id: 3,
         name: '肉蛋食品',
-        class: '餐厨垃圾'
+        class: '可回收物'
       }, {
         id: 4,
         name: '糖果糕点',
-        class: '餐厨垃圾'
+        class: '有害垃圾'
       }],
-      isActive: true,
-      active_item: {
-        id: 4,
-        name: '糖果糕点',
-        class: '餐厨垃圾'
-      }
+      // isActive: false,
+      active_item: ''
     };
   },
   methods: {
     active: function active(item) {
-      this.isActive = !this.isActive;
+      // this.isActive = !this.isActive
       this.active_item = item;
+      this.$refs.popup.open();
     }
   }
 };

@@ -14,7 +14,10 @@
         <i id="harmful" class="iconfont icon-youhailaji"></i>有害垃圾
       </div>
     </div>
-   <chuyulaji></chuyulaji>
+   <div v-if="isActive=='chuyulaji'"><chuyulaji></chuyulaji></div>
+   <div v-else-if="isActive=='qitalaji'"><qitalaji></qitalaji></div>
+   <div v-else-if="isActive=='kehuishouwu'"><kehuishouwu></kehuishouwu></div>
+   <div v-else="isActive=='youhailaji'"><youhailaji></youhailaji></div>
   </view>
 </template>
 

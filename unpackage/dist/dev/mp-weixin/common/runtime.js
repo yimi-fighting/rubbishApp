@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/chuyulaji/chuyulaji":1,"components/list/list":1,"components/rubbishDetail/rubbishDetail":1,"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":1,"uni_modules/uni-popup/components/uni-popup/uni-popup":1};
+/******/ 		var cssChunks = {"components/chuyulaji/chuyulaji":1,"components/kehuishouwu/kehuishouwu":1,"components/qitalaji/qitalaji":1,"components/youhailaji/youhailaji":1,"components/list/list":1,"uni_modules/uni-popup/components/uni-popup/uni-popup":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/chuyulaji/chuyulaji":"components/chuyulaji/chuyulaji","components/list/list":"components/list/list","components/rubbishDetail/rubbishDetail":"components/rubbishDetail/rubbishDetail","uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog":"uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog","uni_modules/uni-popup/components/uni-popup/uni-popup":"uni_modules/uni-popup/components/uni-popup/uni-popup","uni_modules/uni-transition/components/uni-transition/uni-transition":"uni_modules/uni-transition/components/uni-transition/uni-transition"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/chuyulaji/chuyulaji":"components/chuyulaji/chuyulaji","components/kehuishouwu/kehuishouwu":"components/kehuishouwu/kehuishouwu","components/qitalaji/qitalaji":"components/qitalaji/qitalaji","components/youhailaji/youhailaji":"components/youhailaji/youhailaji","components/list/list":"components/list/list","uni_modules/uni-popup/components/uni-popup/uni-popup":"uni_modules/uni-popup/components/uni-popup/uni-popup","uni_modules/uni-transition/components/uni-transition/uni-transition":"uni_modules/uni-transition/components/uni-transition/uni-transition"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -24,28 +24,36 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-.chuyulaji {
-  width: 150px;
-  height: 150px;
-  background-color: #5dab46;
+.container.data-v-4949b4fc {
+  margin: 10px 10px;
+  background-color: #edf3ff;
+  border-radius: 20px;
+  padding: 10px;
+}
+.container .logo.data-v-4949b4fc {
+  margin: 0 auto;
+  width: 70px;
+  height: 70px;
+  background-color: #0168b7;
   border-radius: 10px;
-  text-align: center;
   color: white;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 10px;
   box-sizing: border-box;
-  overflow: hidden;
 }
-.chuyulaji .name {
-  font-size: 20px;
-  font-weight: 800;
-  margin: 10px 0;
+.container .logo .icon-kehuishou.data-v-4949b4fc {
+  margin-top: 5px;
+  font-size: 30px;
 }
-.chuyulaji .class {
-  margin: 10px 0;
-  font-size: 17px;
+.container .content.data-v-4949b4fc {
+  margin-top: 10px;
 }
-.chuyulaji .icon-chuyulaji-yugu {
-  font-size: 50px;
-  font-weight: 500;
-  margin-top: -10px;
+.container .content .canchulaji.data-v-4949b4fc, .container .content .toufangyaoqiu.data-v-4949b4fc {
+  color: #378bff;
+  font-weight: 600;
+  margin: 5px 0;
+  font-size: 15px;
+  padding-left: 10px;
 }
 

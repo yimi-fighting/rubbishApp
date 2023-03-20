@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "rubbish-detail": "/components/rubbishDetail/rubbishDetail"
+    "uni-popup": "/uni_modules/uni-popup/components/uni-popup/uni-popup"
   },
   "component": true
 }

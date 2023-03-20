@@ -1,5 +1,8 @@
 {
   "usingComponents": {
-    "chuyulaji": "/components/chuyulaji/chuyulaji"
+    "chuyulaji": "/components/chuyulaji/chuyulaji",
+    "qitalaji": "/components/qitalaji/qitalaji",
+    "kehuishouwu": "/components/kehuishouwu/kehuishouwu",
+    "youhailaji": "/components/youhailaji/youhailaji"
   }
 }
