@@ -80,7 +80,7 @@ var components
 try {
   components = {
     list: function () {
-      return __webpack_require__.e(/*! import() | components/list/list */ "components/list/list").then(__webpack_require__.bind(null, /*! @/components/list/list.vue */ 72))
+      return __webpack_require__.e(/*! import() | components/list/list */ "components/list/list").then(__webpack_require__.bind(null, /*! @/components/list/list.vue */ 93))
     },
   }
 } catch (e) {

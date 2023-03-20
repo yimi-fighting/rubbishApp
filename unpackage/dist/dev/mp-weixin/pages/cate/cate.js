@@ -103,6 +103,15 @@ try {
     chuyulaji: function () {
       return __webpack_require__.e(/*! import() | components/chuyulaji/chuyulaji */ "components/chuyulaji/chuyulaji").then(__webpack_require__.bind(null, /*! @/components/chuyulaji/chuyulaji.vue */ 65))
     },
+    qitalaji: function () {
+      return __webpack_require__.e(/*! import() | components/qitalaji/qitalaji */ "components/qitalaji/qitalaji").then(__webpack_require__.bind(null, /*! @/components/qitalaji/qitalaji.vue */ 72))
+    },
+    kehuishouwu: function () {
+      return __webpack_require__.e(/*! import() | components/kehuishouwu/kehuishouwu */ "components/kehuishouwu/kehuishouwu").then(__webpack_require__.bind(null, /*! @/components/kehuishouwu/kehuishouwu.vue */ 79))
+    },
+    youhailaji: function () {
+      return __webpack_require__.e(/*! import() | components/youhailaji/youhailaji */ "components/youhailaji/youhailaji").then(__webpack_require__.bind(null, /*! @/components/youhailaji/youhailaji.vue */ 86))
+    },
   }
 } catch (e) {
   if (
@@ -164,6 +173,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+//
+//
+//
 //
 //
 //
