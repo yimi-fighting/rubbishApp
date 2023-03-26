@@ -1,6 +1,7 @@
 import App from './App'
 import {$http} from "@escook/request-miniprogram"
 import "./static/iconfonts/iconfont.css"
+import store from './store/index.js'
 
 uni.$http=$http
 //请求前显示loading
@@ -8,6 +9,7 @@ $http.beforeRequest=function(options){
   uni.showLoading({
     title:"数据加载中……"
   })
+  // options.header={'Content-Type':'application/x-www-form-urlencoded'}
 }
 
 // 请求后隐藏loading
@@ -49,6 +51,8 @@ try {
 } catch (error) { }
 
 const app = new Vue({
+  // 引入vuex
+  store,
   ...App
 })
 app.$mount()

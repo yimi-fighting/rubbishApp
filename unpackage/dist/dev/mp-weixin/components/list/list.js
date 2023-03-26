@@ -165,31 +165,33 @@ exports.default = void 0;
 var _default = {
   name: "list",
   data: function data() {
+    var list = this.$store.state.list;
+    // 向list数组中添加class属性
+    var new_list = list.map(function (item) {
+      if (item.type === 0) {
+        item.class = '可回收物';
+        return item;
+      } else if (item.type === 1) {
+        item.class = '有害垃圾';
+        return item;
+      } else if (item.type === 2) {
+        item.class = '厨余垃圾';
+        return item;
+      } else {
+        item.class = '其他垃圾';
+        return item;
+      }
+    });
     return {
-      list: [{
-        id: 1,
-        name: '吃剩的快餐饭菜',
-        class: '其他垃圾'
-      }, {
-        id: 2,
-        name: '菜头菜尾',
-        class: '厨余垃圾'
-      }, {
-        id: 3,
-        name: '肉蛋食品',
-        class: '可回收物'
-      }, {
-        id: 4,
-        name: '糖果糕点',
-        class: '有害垃圾'
-      }],
+      // 	指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
+      list: new_list,
       // isActive: false,
       active_item: ''
     };
   },
   methods: {
     active: function active(item) {
-      // this.isActive = !this.isActive
+      this.isActive = !this.isActive;
       this.active_item = item;
       this.$refs.popup.open();
     }
