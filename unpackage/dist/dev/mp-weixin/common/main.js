@@ -26,6 +26,9 @@ wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;
 uni.$http = _requestMiniprogram.$http;
 //请求前显示loading
 _requestMiniprogram.$http.beforeRequest = function (options) {
+  options.header = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
   uni.showLoading({
     title: "数据加载中……"
   });
@@ -33,7 +36,7 @@ _requestMiniprogram.$http.beforeRequest = function (options) {
 };
 
 // 请求后隐藏loading
-_requestMiniprogram.$http.afterRequest = function () {
+_requestMiniprogram.$http.afterRequest = function (res) {
   uni.hideLoading();
 };
 _vue.default.config.productionTip = false;

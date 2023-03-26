@@ -17,7 +17,14 @@
 <!-- 搜索框 -->
     <div class="search_contain">
       <i class="iconfont icon-fangdajing"></i>
-      <input class="search" type="text" placeholder="输入垃圾名称">
+      <!-- 	confirm-type,键盘右下角按钮的文字，
+            send	右下角按钮为“发送”
+            search	右下角按钮为“搜索”
+            next	右下角按钮为“下一个”
+            go	右下角按钮为“前往”
+            done	右下角按钮为“完成”
+ -->
+      <input class="search" type="text" confirm-type="search" @blur="search($event)" placeholder="输入垃圾名称">
     </div>
     <!-- 拍照识别 -->
     <div class="photograph">
@@ -30,11 +37,18 @@
 </template>
 
 <script>
+  import {search} from '../../api/index.js'
   export default {
     data() {
       return {
 
       };
+    },
+    methods:{
+      async search(e){
+        const list=await search(e.detail.value)
+        console.log('list123',list);
+      }
     }
   }
 </script>

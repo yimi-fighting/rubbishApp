@@ -11062,21 +11062,105 @@ exports.default = _default;
 /* 43 */,
 /* 44 */,
 /* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */
+/* 46 */
+/*!***********************************************!*\
+  !*** D:/111代码/111前端/uniapp/垃圾分类/api/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getList = getList;
+exports.search = search;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 47));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 49));
+// 获取热搜垃圾分类的列表
+function getList(_x) {
+  return _getList.apply(this, arguments);
+}
+function _getList() {
+  _getList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(type) {
+    var _yield$uni$$http$post, res;
+    return _regenerator.default.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return uni.$http.post('https://apis.tianapi.com/hotlajifenlei/index', {
+              //   指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
+              key: 'b8441c296ca222b20e6f891bb07167b8',
+              type: type
+            });
+          case 2:
+            _yield$uni$$http$post = _context.sent;
+            res = _yield$uni$$http$post.data;
+            if (!(res.code === 200)) {
+              _context.next = 8;
+              break;
+            }
+            return _context.abrupt("return", res.result.list);
+          case 8:
+            uni.showToast({
+              title: res.msg,
+              icon: 'none'
+            });
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _getList.apply(this, arguments);
+}
+function search(_x2) {
+  return _search.apply(this, arguments);
+}
+function _search() {
+  _search = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2(word) {
+    var _yield$uni$$http$post2, res;
+    return _regenerator.default.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return uni.$http.post('https://apis.tianapi.com/lajifenlei/index', {
+              //   指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
+              key: 'b8441c296ca222b20e6f891bb07167b8',
+              word: word
+            });
+          case 2:
+            _yield$uni$$http$post2 = _context2.sent;
+            res = _yield$uni$$http$post2.data;
+            if (!(res.code === 200)) {
+              _context2.next = 8;
+              break;
+            }
+            return _context2.abrupt("return", res.result.list);
+          case 8:
+            uni.showToast({
+              title: res.msg,
+              icon: 'none'
+            });
+          case 9:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _search.apply(this, arguments);
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 47 */
 /*!************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/@babel/runtime/regenerator/index.js ***!
   \************************************************************************************************/
@@ -11085,11 +11169,11 @@ exports.default = _default;
 
 // TODO(Babel 8): Remove this file.
 
-var runtime = __webpack_require__(/*! @babel/runtime/helpers/regeneratorRuntime */ 61)();
+var runtime = __webpack_require__(/*! @babel/runtime/helpers/regeneratorRuntime */ 48)();
 module.exports = runtime;
 
 /***/ }),
-/* 61 */
+/* 48 */
 /*!*******************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/regeneratorRuntime.js ***!
   \*******************************************************************/
@@ -11410,7 +11494,7 @@ function _regeneratorRuntime() {
 module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 62 */
+/* 49 */
 /*!*****************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
   \*****************************************************************/
@@ -11450,69 +11534,20 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
-/* 63 */
-/*!***********************************************!*\
-  !*** D:/111代码/111前端/uniapp/垃圾分类/api/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getList = getList;
-var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 60));
-var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 62));
-function getList(_x) {
-  return _getList.apply(this, arguments);
-}
-function _getList() {
-  _getList = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(type) {
-    var _yield$uni$$http$post, res;
-    return _regenerator.default.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            uni.$http.beforeRequest = function (options) {
-              options.header = {
-                'Content-Type': 'application/x-www-form-urlencoded'
-              };
-            };
-            _context.next = 3;
-            return uni.$http.post('https://apis.tianapi.com/hotlajifenlei/index', {
-              //   指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
-              key: 'b8441c296ca222b20e6f891bb07167b8',
-              type: type
-            });
-          case 3:
-            _yield$uni$$http$post = _context.sent;
-            res = _yield$uni$$http$post.data;
-            if (!(res.code === 200)) {
-              _context.next = 9;
-              break;
-            }
-            return _context.abrupt("return", res.result.list);
-          case 9:
-            uni.showToast({
-              title: res.msg,
-              icon: 'none'
-            });
-          case 10:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-  return _getList.apply(this, arguments);
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
-
-/***/ }),
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
 /* 64 */,
 /* 65 */,
 /* 66 */,
