@@ -34,3 +34,35 @@ export async function search(word){
    })
   }
 }
+
+export async function news(page){
+  const {data:res}=await uni.$http.post('https://apis.tianapi.com/lajifenleinews/index',{
+    key:'b8441c296ca222b20e6f891bb07167b8',
+    num:10,
+    word:'广州',
+    page:page
+  })
+  if(res.code===200){
+    return res.result.newslist
+  }else{
+    uni.showToast({
+      title:res.msg,
+      icon:'none'
+    })
+  }
+}
+
+export async function identifyPhoto(base64){
+  const {data:res}=await uni.$http.post('https://apis.tianapi.com/imglajifenlei/index',{
+    key:'b8441c296ca222b20e6f891bb07167b8',
+    img:base64
+  })
+  if(res.code===200){
+    return res.result.list
+  }else{
+    uni.showToast({
+      title:res.msg,
+      icon:'none'
+    })
+  }
+}

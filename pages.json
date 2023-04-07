@@ -12,8 +12,25 @@
       //   "navigationBarTitleText": "",
       //   "enablePullDownRefresh": false
       // }
+    }, {
+      "path": "pages/home/search/search"
+      // "style" :                                                                                    
+      // {
+      //     "navigationBarTitleText": "",
+      //     "enablePullDownRefresh": false
+      // }
+
     }
-  ],
+      ,{
+            "path" : "pages/webview/webview"
+            // "style" :                                                                                    
+            // {
+            //     "navigationBarTitleText": "",
+            //     "enablePullDownRefresh": false
+            // }
+            
+        }
+    ],
   "tabBar": { //底部tabBar 
     "selectedColor": "#C00000",
     "list": [{
@@ -41,7 +58,8 @@
   "globalStyle": {
     "navigationBarTextStyle": "#a4e4cf",
     "navigationBarTitleText": "智能垃圾分类",
-    "navigationBarBackgroundColor": "#00cb79"
+    "navigationBarBackgroundColor": "#00cb79",
+    "onReachBottomDistance": 50
   },
   "uniIdRouter": {}
 }
