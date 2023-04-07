@@ -160,9 +160,6 @@ swiper image {
   line-height: 50px;
   margin-right: 5px;
 }
-.collapse_container {
-  background-color: #55bf53;
-}
 .collapse_container .collapse_item .content {
   display: flex;
   height: 50px;

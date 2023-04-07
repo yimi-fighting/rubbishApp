@@ -42,7 +42,7 @@
     <!-- <button @click="open">点击</button> -->
     <uni-drawer ref="showLeft" mode="left" :width="300">
       <uni-collapse accordion v-model="accordionVal" @change="change" class="collapse_container">
-        <uni-collapse-item :title="item.title" :show-arrow="false" v-for="(item,index) in photoList" :key="index">
+        <uni-collapse-item :title="item.title" :show-arrow="false" v-for="(item,index) in photoList" :key="index" class="collapse_item">
             <div v-for="(item,index) in list_search" :key="index" class="content">
               <div class="name">{{item.name}}</div>
               <div :class="[item.class=='厨余垃圾'?'chuyulaji type':item.class=='其他垃圾'?'qitalaji type':item.class=='可回收物'?'kehuishouwu type':'youhailaji type']">{{item.class}}</div>
@@ -88,7 +88,13 @@
         list_search: [],
         // 手风琴
         accordionVal: '1',
-        photoList: [],
+        photoList: [{
+        "name": "化妆品",
+        "trust": 20,
+        "lajitype": 1,
+        "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
+        title:`化妆品，20%`
+      },],
       };
     },
     methods: {
@@ -160,10 +166,11 @@
         else {
           // 获取搜索的信息
           let new_list = typeToClass(list)
+          // 获取list的高度，解决空数组时，高度依然存在的问题
+          // this.photoList[e].height=new_list.length*50
           console.log('new_list', new_list);
           this.list_search = new_list
         }
-
       },
     },
     onReachBottom() {
@@ -172,7 +179,7 @@
     },
     onLoad() {
       this.getNews(this.page)
-      // this.$refs.showLeft.open()
+      this.$refs.showLeft.open()
     }
   }
 </script>
@@ -337,7 +344,6 @@
   }
 
 .collapse_container{
-  background-color: #55bf53;
 .collapse_item{
   .content{
     display: flex;

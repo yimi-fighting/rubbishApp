@@ -256,7 +256,13 @@ var _default = {
       list_search: [],
       // 手风琴
       accordionVal: '1',
-      photoList: []
+      photoList: [{
+        "name": "化妆品",
+        "trust": 20,
+        "lajitype": 1,
+        "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
+        title: "\u5316\u5986\u54C1\uFF0C20%"
+      }]
     };
   },
   methods: {
@@ -389,7 +395,8 @@ var _default = {
                   _this3.list_search = [];
                 } else {
                   // 获取搜索的信息
-                  new_list = (0, _index2.typeToClass)(list);
+                  new_list = (0, _index2.typeToClass)(list); // 获取list的高度，解决空数组时，高度依然存在的问题
+                  // this.photoList[e].height=new_list.length*50
                   console.log('new_list', new_list);
                   _this3.list_search = new_list;
                 }
@@ -408,7 +415,7 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.getNews(this.page);
-    // this.$refs.showLeft.open()
+    this.$refs.showLeft.open();
   }
 };
 exports.default = _default;
