@@ -188,4 +188,12 @@ swiper image {
 .collapse_container .collapse_item .content .youhailaji {
   background-color: #f53327;
 }
+.scroll-view-box {
+  flex: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
 

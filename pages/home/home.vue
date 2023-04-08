@@ -4,7 +4,7 @@
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item>
         <view class="swiper-item">
-          <image src="../../static/picture/lbt1.webp" mode=""></image>
+          <image src="../../static/picture/lbt1.jpg" mode=""></image>
         </view>
       </swiper-item>
       <swiper-item>
@@ -41,14 +41,17 @@
     <!-- 弹出层 -->
     <!-- <button @click="open">点击</button> -->
     <uni-drawer ref="showLeft" mode="left" :width="300">
-      <uni-collapse accordion v-model="accordionVal" @change="change" class="collapse_container">
+      <!-- 抽屉滚动效果 -->
+      <scroll-view class="scroll-view-box" scroll-y="true">
+      <uni-collapse accordion v-model="accordionVal" class="collapse_container">
         <uni-collapse-item :title="item.title" :show-arrow="false" v-for="(item,index) in photoList" :key="index" class="collapse_item">
-            <div v-for="(item,index) in list_search" :key="index" class="content">
-              <div class="name">{{item.name}}</div>
-              <div :class="[item.class=='厨余垃圾'?'chuyulaji type':item.class=='其他垃圾'?'qitalaji type':item.class=='可回收物'?'kehuishouwu type':'youhailaji type']">{{item.class}}</div>
+            <div v-if="item.isShow" v-for="(item2,index2) in item.detailList" :key="index2" class="content">
+              <div class="name">{{item2.name}}</div>
+              <div :class="[item2.class=='厨余垃圾'?'chuyulaji type':item2.class=='其他垃圾'?'qitalaji type':item2.class=='可回收物'?'kehuishouwu type':'youhailaji type']">{{item2.class}}</div>
             </div>
         </uni-collapse-item>
       </uni-collapse>
+      </scroll-view>
     </uni-drawer>
 
     <!-- 首页新闻 -->
@@ -76,7 +79,7 @@
   } from '../../api/index.js'
   import {
     typeToClass,
-    getTitle
+    getNewList
   } from '../../tool/index.js';
   export default {
     data() {
@@ -88,13 +91,15 @@
         list_search: [],
         // 手风琴
         accordionVal: '1',
-        photoList: [{
-        "name": "化妆品",
-        "trust": 20,
-        "lajitype": 1,
-        "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
-        title:`化妆品，20%`
-      },],
+        photoList: [
+      //     {
+      //   "name": "化妆品",
+      //   "trust": 20,
+      //   "lajitype": 1,
+      //   "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
+      //   title:`化妆品，20%`
+      // },
+      ],
       };
     },
     methods: {
@@ -146,11 +151,10 @@
             const base64Img = uni.getFileSystemManager().readFileSync(res.tempImagePath, 'base64')
             // 发送请求进行图片识别
             const result= await identifyPhoto(base64Img)
-            const new_list=getTitle(result)
+            // getnewList返回为一个promise数组，需要用promiseall获取每个promise的值
+            const new_list= await Promise.all(getNewList(result))
             this.photoList=new_list
-            console.log(this.photoList);
             this.$refs.showLeft.open()
-            // console.log('sadasdasda',new_list);
           }
         })
       },
@@ -166,10 +170,10 @@
         else {
           // 获取搜索的信息
           let new_list = typeToClass(list)
-          // 获取list的高度，解决空数组时，高度依然存在的问题
-          // this.photoList[e].height=new_list.length*50
-          console.log('new_list', new_list);
-          this.list_search = new_list
+          // console.log('new_list', new_list);
+          // this.list_search = new_list
+          this.$set(this, 'list_search', new_list)
+          // this.$forceUpdate()
         }
       },
     },
@@ -179,8 +183,8 @@
     },
     onLoad() {
       this.getNews(this.page)
-      this.$refs.showLeft.open()
-    }
+      // this.$refs.showLeft.open()
+    },
   }
 </script>
 
@@ -375,5 +379,14 @@
     }
   }
 }
+}
+// 处理抽屉内容滚动
+.scroll-view-box {
+	flex: 1;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 </style>

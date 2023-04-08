@@ -246,6 +246,9 @@ var _index2 = __webpack_require__(/*! ../../tool/index.js */ 50);
 //
 //
 //
+//
+//
+//
 var _default = {
   data: function data() {
     return {
@@ -256,13 +259,15 @@ var _default = {
       list_search: [],
       // 手风琴
       accordionVal: '1',
-      photoList: [{
-        "name": "化妆品",
-        "trust": 20,
-        "lajitype": 1,
-        "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
-        title: "\u5316\u5986\u54C1\uFF0C20%"
-      }]
+      photoList: [
+        //     {
+        //   "name": "化妆品",
+        //   "trust": 20,
+        //   "lajitype": 1,
+        //   "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
+        //   title:`化妆品，20%`
+        // },
+      ]
     };
   },
   methods: {
@@ -356,12 +361,13 @@ var _default = {
                     return (0, _index.identifyPhoto)(base64Img);
                   case 5:
                     result = _context3.sent;
-                    new_list = (0, _index2.getTitle)(result);
+                    _context3.next = 8;
+                    return Promise.all((0, _index2.getNewList)(result));
+                  case 8:
+                    new_list = _context3.sent;
                     _this2.photoList = new_list;
-                    console.log(_this2.photoList);
                     _this2.$refs.showLeft.open();
-                    // console.log('sadasdasda',new_list);
-                  case 10:
+                  case 11:
                   case "end":
                     return _context3.stop();
                 }
@@ -395,10 +401,10 @@ var _default = {
                   _this3.list_search = [];
                 } else {
                   // 获取搜索的信息
-                  new_list = (0, _index2.typeToClass)(list); // 获取list的高度，解决空数组时，高度依然存在的问题
-                  // this.photoList[e].height=new_list.length*50
-                  console.log('new_list', new_list);
-                  _this3.list_search = new_list;
+                  new_list = (0, _index2.typeToClass)(list); // console.log('new_list', new_list);
+                  // this.list_search = new_list
+                  _this3.$set(_this3, 'list_search', new_list);
+                  // this.$forceUpdate()
                 }
               case 7:
               case "end":
@@ -415,7 +421,7 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.getNews(this.page);
-    this.$refs.showLeft.open();
+    // this.$refs.showLeft.open()
   }
 };
 exports.default = _default;

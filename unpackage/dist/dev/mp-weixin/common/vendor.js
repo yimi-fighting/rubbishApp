@@ -12713,11 +12713,15 @@ module.exports = _slicedToArray, module.exports.__esModule = true, module.export
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTitle = getTitle;
+exports.getNewList = getNewList;
 exports.typeToClass = typeToClass;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 46));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 48));
+var _index = __webpack_require__(/*! ../api/index.js */ 49);
 function typeToClass(list) {
   return list.map(function (item) {
     if (item.type === 0) {
@@ -12735,12 +12739,46 @@ function typeToClass(list) {
     }
   });
 }
-function getTitle(list) {
-  return list.map(function (item) {
-    var percentage = item.trust < 1 ? item.trust * 100 : item.trust;
-    item.title = "".concat(item.name, " | \u76F8\u4F3C\u5EA6").concat(percentage, "%");
-    return item;
-  });
+function getNewList(list) {
+  // 由于item => { ... }箭头函数中使用了async关键字，异步函数会返回一个Promise对象。所以返回一个promise数组
+  var arr = list.map( /*#__PURE__*/function () {
+    var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(item) {
+      var percentage, list, newList;
+      return _regenerator.default.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // 添加title
+              percentage = item.trust < 1 ? item.trust * 100 : item.trust;
+              item.title = "".concat(item.name, " | \u76F8\u4F3C\u5EA6").concat(percentage, "%");
+              // 添加list
+              // 调用接口查询,根据name调用search得到详细的垃圾种类，将其存在对象的list属性中
+              _context.next = 4;
+              return (0, _index.search)(item.name);
+            case 4:
+              list = _context.sent;
+              if (list === undefined) {
+                item.detailList = [];
+                //判断是否显示手风琴的下拉内容
+                item.isShow = false;
+              } else {
+                newList = typeToClass(list);
+                item.detailList = newList;
+                item.isShow = true;
+              }
+              return _context.abrupt("return", item);
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  return arr;
 }
 
 /***/ }),
