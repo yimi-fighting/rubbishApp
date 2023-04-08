@@ -20,6 +20,13 @@
                     "query": "",
                     "launchMode": "default",
                     "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/home/search/search",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }

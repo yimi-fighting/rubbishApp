@@ -6,6 +6,7 @@ import store from './store/index.js'
 uni.$http=$http
 //请求前显示loading
 $http.beforeRequest=function(options){
+    options.header={'Content-Type':'application/x-www-form-urlencoded'}
   uni.showLoading({
     title:"数据加载中……"
   })
@@ -13,9 +14,11 @@ $http.beforeRequest=function(options){
 }
 
 // 请求后隐藏loading
-$http.afterRequest=function(){
+$http.afterRequest=function(res){
   uni.hideLoading()
 }
+
+
 
 // #ifndef VUE3
 import Vue from 'vue'

@@ -1,0 +1,1 @@
+<view><view class="search_contain _div"><view class="iconfont icon-fangdajing _i"></view><input class="search" type="text" confirm-type="search" placeholder="输入垃圾名称" data-event-opts="{{[['blur',[['search',['$event']]]]]}}" bindblur="__e"/></view><block wx:if="{{show}}"><view class="_div"><list vue-id="992db6e4-1" bind:__l="__l"></list></view></block></view>

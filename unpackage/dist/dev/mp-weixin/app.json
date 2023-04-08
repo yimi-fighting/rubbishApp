@@ -3,13 +3,16 @@
     "pages/home/home",
     "pages/test/test",
     "pages/cate/cate",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/home/search/search",
+    "pages/webview/webview"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "智能垃圾分类",
-    "navigationBarBackgroundColor": "#00cb79"
+    "navigationBarBackgroundColor": "#00cb79",
+    "onReachBottomDistance": 50
   },
   "tabBar": {
     "selectedColor": "#C00000",
