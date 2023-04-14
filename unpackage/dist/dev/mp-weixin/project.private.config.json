@@ -27,6 +27,27 @@
                     "query": "",
                     "launchMode": "default",
                     "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/test/test",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/my/my",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/test/score/score",
+                    "query": "answerList=%5B%7B%22name%22%3A%22%E9%95%B0%E5%88%80%22%2C%22answer%22%3A%22%E5%85%B6%E4%BB%96%E5%9E%83%E5%9C%BE%22%2C%22yourAnswer%22%3A%22%E5%8F%AF%E5%9B%9E%E6%94%B6%E7%89%A9%22%7D%5D",
+                    "launchMode": "default",
+                    "scene": null
                 }
             ]
         }

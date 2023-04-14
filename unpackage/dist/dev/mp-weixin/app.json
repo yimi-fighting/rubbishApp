@@ -5,7 +5,8 @@
     "pages/cate/cate",
     "pages/my/my",
     "pages/home/search/search",
-    "pages/webview/webview"
+    "pages/webview/webview",
+    "pages/test/score/score"
   ],
   "subPackages": [],
   "window": {

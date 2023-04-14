@@ -66,3 +66,17 @@ export async function identifyPhoto(base64){
     })
   }
 }
+
+export async function getQuestions(){
+  const {data:res}=await uni.$http.post('https://apis.tianapi.com/anslajifenlei/index',{
+    key:'b8441c296ca222b20e6f891bb07167b8'
+  })
+  if(res.code===200){
+    return res.result
+  }else{
+    uni.showToast({
+      title:res.msg,
+      icon:'none'
+    })
+  }
+}

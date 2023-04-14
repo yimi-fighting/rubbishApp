@@ -30,6 +30,15 @@
             // }
             
         }
+        ,{
+            "path" : "pages/test/score/score"
+            // "style" :                                                                                    
+            // {
+            //     "navigationBarTitleText": "",
+            //     "enablePullDownRefresh": false
+            // }
+            
+        }
     ],
   "tabBar": { //底部tabBar 
     "selectedColor": "#C00000",
