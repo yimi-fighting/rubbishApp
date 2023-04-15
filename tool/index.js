@@ -42,3 +42,11 @@ export function getNewList(list) {
   })
 return arr
 }
+
+export function setXY(list){
+  return list.map(item=>{
+    item.x=Math.random()*300
+    item.y=Math.random()*150
+    return item
+  })
+}
