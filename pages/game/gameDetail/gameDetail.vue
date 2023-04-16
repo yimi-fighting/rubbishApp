@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <div class="card_container">
-      <div class="card" v-for="item in cardList" :key="item.key" :style="item.style">{{item.content.name}}</div>
+      <div class="card" :class="[item.cover?'cover':'']" v-for="item in cardList" :key="item.key" :style="item.style" @click="clickCard(item)">{{item.content.name}}</div>
     </div>
     <div class="tool">
       <button @click="removeThree">取出三张卡片</button>
@@ -10,15 +10,10 @@
     </div>
     <div class="three_card_container">
       <div class="card">{{aaa}}</div>
-      <div class="card">{{aaa}}</div>
-      <div class="card">{{aaa}}</div>
-      <div class="card top">{{aaa}}</div>
     </div>
     <div class="choose_card_container">
-      <div class="card">{{aaa}}</div>
-      <div class="card">{{aaa}}</div>
-      <div class="card">{{aaa}}</div>
-      <div class="card top">{{aaa}}</div>
+      <div class="card" v-for="item in penddingList" :key="item.key" @click="clickCard(item)" :style="item.style">{{item.content.name}}</div>
+      </div>
     </div>
 
   </view>
@@ -43,6 +38,7 @@
       this.key = key;
       this.val = key;
       this.content = {};
+      this.cover=false;
       this.style = `top: ${y*Card.y+30}px;left:${x*Card.x+30}px;`
     }
     setVal(val) {
@@ -89,8 +85,6 @@
         this.tools.random = true
         // 绘制卡片地图
         this.getMaps(options)
-        // 给卡片设置图案
-        // 计算遮挡关系
       },
       // 绘制卡片地图
       getMaps(options) {
@@ -100,6 +94,49 @@
         cardMap = this.setCard(cardMap, options)
         // 设置卡片的内容
         this.setContent(options)
+        // 计算卡片的遮罩关系
+        this.calcCover(cardMap)
+      },
+      clickCard(item){
+        // 将点击的卡片冲cardList中去除，保存在penddingList中
+        let index=this.cardList.indexOf(item)
+        this.cardList=this.cardList.slice(0,index).concat(this.cardList.slice(index+1))
+        // 重新设置item的style
+        item.style=`left:${(this.penddingList.length-1)*Card.x*2+60}px`
+        this.penddingList.push(item)
+        // 重新计算遮挡关系
+        this.calcCover()
+        //判断是否有三个重复的可以消除
+        
+      },
+      // 计算卡片遮罩关系
+      calcCover(){
+        // 从后往前，后面的层数高
+        // 初始化cover数组，false表示改位置没有卡片，true表示该位置的上方有卡片，需要设置cover样式
+        let coverMap=new Array(this.yUnit)
+        for(let i=0;i<this.yUnit;i++){
+          coverMap[i]=new Array(this.xUnit).fill(false)
+        }
+        for(let i=this.cardList.length-1;i>=0;i--){
+          const item=this.cardList[i]
+          const {x,y}=item
+          if(coverMap[y][x]){
+            item.cover=true
+          }else if(coverMap[y+1][x]){
+            item.cover=true
+          }else if(coverMap[y][x+1]){
+            item.cover=true
+          }else if(coverMap[y+1][x+1]){
+            item.cover=true
+          }else{
+            item.cover=false
+          }
+          coverMap[y][x]=true
+          coverMap[y+1][x]=true
+          coverMap[y][x+1]=true
+          coverMap[y+1][x+1]=true
+          
+        }
       },
       // 设置卡片的内容
       setContent(options) {
@@ -229,6 +266,107 @@
         }
         return cardMap
       },
+      // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
+      initContentType(){
+        // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
+        const contentList= [{
+            name: '📦',
+            class: '0',
+            style: 'background: #73b0ff'
+          }, {
+            name: '📚',
+            class: '0',
+            style: 'background: #73b0ff'
+          }, {
+            name: '🔩',
+            class: '0',
+            style: 'background: #73b0ff'
+          }, {
+            name: '🍶',
+            class: '0',
+            style: 'background: #73b0ff'
+          }, {
+            name: '👗',
+            class: '0',
+            style: 'background: #73b0ff'
+          }, {
+            name: '💊',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '🔋',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '🧪',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '💉',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '🎨',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '🚨',
+            class: '1',
+            style: 'background: #ff5c74'
+          }, {
+            name: '🍎',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🍗',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🍌',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🌿',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🍂',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🐟',
+            class: '2',
+            style: 'background: #82eb62'
+          }, {
+            name: '🧻',
+            class: '3',
+            style: 'background: #ced5b2'
+          }, {
+            name: '🚬',
+            class: '3',
+            style: 'background: #ced5b2'
+          }, {
+            name: '👞',
+            class: '3',
+            style: 'background: #ced5b2'
+          }, {
+            name: '🧯',
+            class: '3',
+            style: 'background: #ced5b2'
+          }]
+          
+        // 随机卡片样式数组
+        // 洗牌算法
+        let shuffle=(arr)=>{
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr;
+        }
+        const selected=shuffle(contentList).slice(0,this.options.maxCard)
+         Card.setContentType(selected)
+      },
       // 再来一轮
       again() {
         this.init()
@@ -243,104 +381,10 @@
       }
     },
     onLoad(option) {
-          // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
-      const contentList= [{
-          name: '📦',
-          class: '0',
-          style: 'background: #73b0ff'
-        }, {
-          name: '📚',
-          class: '0',
-          style: 'background: #73b0ff'
-        }, {
-          name: '🔩',
-          class: '0',
-          style: 'background: #73b0ff'
-        }, {
-          name: '🍶',
-          class: '0',
-          style: 'background: #73b0ff'
-        }, {
-          name: '👗',
-          class: '0',
-          style: 'background: #73b0ff'
-        }, {
-          name: '💊',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '🔋',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '🧪',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '💉',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '🎨',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '🚨',
-          class: '1',
-          style: 'background: #ff5c74'
-        }, {
-          name: '🍎',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🍗',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🍌',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🌿',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🍂',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🐟',
-          class: '2',
-          style: 'background: #82eb62'
-        }, {
-          name: '🧻',
-          class: '3',
-          style: 'background: #ced5b2'
-        }, {
-          name: '🚬',
-          class: '3',
-          style: 'background: #ced5b2'
-        }, {
-          name: '👞',
-          class: '3',
-          style: 'background: #ced5b2'
-        }, {
-          name: '🧯',
-          class: '3',
-          style: 'background: #ced5b2'
-        }]
-      this.options=JSON.parse(option.options)
-      // 随机卡片样式数组
-      // 洗牌算法
-      let shuffle=(arr)=>{
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-      }
-      const selected=shuffle(contentList).slice(0,this.options.maxCard)
-       Card.setContentType(selected)
+        this.options=JSON.parse(option.options)      
+        // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
+        this.initContentType()
+        // 初始化游戏
         this.init(this.options)
     },
     

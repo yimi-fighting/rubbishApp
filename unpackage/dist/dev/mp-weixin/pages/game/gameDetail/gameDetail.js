@@ -145,11 +145,6 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 //
 //
 //
-//
-//
-//
-//
-//
 var Card = /*#__PURE__*/function () {
   // 卡片的宽高,只有原本高度的一半，因为之后一个卡片占2*2的数组大小，方便形成上层卡片压到下层卡片的某个角的效果。
 
@@ -165,6 +160,7 @@ var Card = /*#__PURE__*/function () {
     this.key = key;
     this.val = key;
     this.content = {};
+    this.cover = false;
     this.style = "top: ".concat(y * Card.y + 30, "px;left:").concat(x * Card.x + 30, "px;");
   }
   (0, _createClass2.default)(Card, [{
@@ -220,8 +216,6 @@ var _default = {
       this.tools.random = true;
       // 绘制卡片地图
       this.getMaps(options);
-      // 给卡片设置图案
-      // 计算遮挡关系
     },
     // 绘制卡片地图
     getMaps: function getMaps(options) {
@@ -231,6 +225,48 @@ var _default = {
       cardMap = this.setCard(cardMap, options);
       // 设置卡片的内容
       this.setContent(options);
+      // 计算卡片的遮罩关系
+      this.calcCover(cardMap);
+    },
+    clickCard: function clickCard(item) {
+      // 将点击的卡片冲cardList中去除，保存在penddingList中
+      var index = this.cardList.indexOf(item);
+      this.cardList = this.cardList.slice(0, index).concat(this.cardList.slice(index + 1));
+      // 重新设置item的style
+      item.style = "left:".concat((this.penddingList.length - 1) * Card.x * 2 + 60, "px");
+      this.penddingList.push(item);
+      // 重新计算遮挡关系
+      this.calcCover();
+      //判断是否有三个重复的可以消除
+    },
+    // 计算卡片遮罩关系
+    calcCover: function calcCover() {
+      // 从后往前，后面的层数高
+      // 初始化cover数组，false表示改位置没有卡片，true表示该位置的上方有卡片，需要设置cover样式
+      var coverMap = new Array(this.yUnit);
+      for (var i = 0; i < this.yUnit; i++) {
+        coverMap[i] = new Array(this.xUnit).fill(false);
+      }
+      for (var _i = this.cardList.length - 1; _i >= 0; _i--) {
+        var item = this.cardList[_i];
+        var x = item.x,
+          y = item.y;
+        if (coverMap[y][x]) {
+          item.cover = true;
+        } else if (coverMap[y + 1][x]) {
+          item.cover = true;
+        } else if (coverMap[y][x + 1]) {
+          item.cover = true;
+        } else if (coverMap[y + 1][x + 1]) {
+          item.cover = true;
+        } else {
+          item.cover = false;
+        }
+        coverMap[y][x] = true;
+        coverMap[y + 1][x] = true;
+        coverMap[y][x + 1] = true;
+        coverMap[y + 1][x + 1] = true;
+      }
     },
     // 设置卡片的内容
     setContent: function setContent(options) {
@@ -332,7 +368,7 @@ var _default = {
       }
       // 卡片形成三的倍数,去掉顶层的卡片，因为顶层的卡片最多
       cardList.reverse();
-      for (var _i = 0; _i < cardList.length % 3; _i++) {
+      for (var _i2 = 0; _i2 < cardList.length % 3; _i2++) {
         var _item = cardList.pop();
         map[_item.z][_item.y][_item.x] = 0;
       }
@@ -356,6 +392,109 @@ var _default = {
       }
       return cardMap;
     },
+    // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
+    initContentType: function initContentType() {
+      // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
+      var contentList = [{
+        name: '📦',
+        class: '0',
+        style: 'background: #73b0ff'
+      }, {
+        name: '📚',
+        class: '0',
+        style: 'background: #73b0ff'
+      }, {
+        name: '🔩',
+        class: '0',
+        style: 'background: #73b0ff'
+      }, {
+        name: '🍶',
+        class: '0',
+        style: 'background: #73b0ff'
+      }, {
+        name: '👗',
+        class: '0',
+        style: 'background: #73b0ff'
+      }, {
+        name: '💊',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '🔋',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '🧪',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '💉',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '🎨',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '🚨',
+        class: '1',
+        style: 'background: #ff5c74'
+      }, {
+        name: '🍎',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🍗',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🍌',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🌿',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🍂',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🐟',
+        class: '2',
+        style: 'background: #82eb62'
+      }, {
+        name: '🧻',
+        class: '3',
+        style: 'background: #ced5b2'
+      }, {
+        name: '🚬',
+        class: '3',
+        style: 'background: #ced5b2'
+      }, {
+        name: '👞',
+        class: '3',
+        style: 'background: #ced5b2'
+      }, {
+        name: '🧯',
+        class: '3',
+        style: 'background: #ced5b2'
+      }];
+
+      // 随机卡片样式数组
+      // 洗牌算法
+      var shuffle = function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var _ref2 = [arr[j], arr[i]];
+          arr[i] = _ref2[0];
+          arr[j] = _ref2[1];
+        }
+        return arr;
+      };
+      var selected = shuffle(contentList).slice(0, this.options.maxCard);
+      Card.setContentType(selected);
+    },
     // 再来一轮
     again: function again() {
       this.init();
@@ -366,106 +505,10 @@ var _default = {
     removeThree: function removeThree() {}
   },
   onLoad: function onLoad(option) {
-    // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
-    var contentList = [{
-      name: '📦',
-      class: '0',
-      style: 'background: #73b0ff'
-    }, {
-      name: '📚',
-      class: '0',
-      style: 'background: #73b0ff'
-    }, {
-      name: '🔩',
-      class: '0',
-      style: 'background: #73b0ff'
-    }, {
-      name: '🍶',
-      class: '0',
-      style: 'background: #73b0ff'
-    }, {
-      name: '👗',
-      class: '0',
-      style: 'background: #73b0ff'
-    }, {
-      name: '💊',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '🔋',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '🧪',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '💉',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '🎨',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '🚨',
-      class: '1',
-      style: 'background: #ff5c74'
-    }, {
-      name: '🍎',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🍗',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🍌',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🌿',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🍂',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🐟',
-      class: '2',
-      style: 'background: #82eb62'
-    }, {
-      name: '🧻',
-      class: '3',
-      style: 'background: #ced5b2'
-    }, {
-      name: '🚬',
-      class: '3',
-      style: 'background: #ced5b2'
-    }, {
-      name: '👞',
-      class: '3',
-      style: 'background: #ced5b2'
-    }, {
-      name: '🧯',
-      class: '3',
-      style: 'background: #ced5b2'
-    }];
     this.options = JSON.parse(option.options);
-    // 随机卡片样式数组
-    // 洗牌算法
-    var shuffle = function shuffle(arr) {
-      for (var i = arr.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var _ref2 = [arr[j], arr[i]];
-        arr[i] = _ref2[0];
-        arr[j] = _ref2[1];
-      }
-      return arr;
-    };
-    var selected = shuffle(contentList).slice(0, this.options.maxCard);
-    Card.setContentType(selected);
+    // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
+    this.initContentType();
+    // 初始化游戏
     this.init(this.options);
   }
 };
