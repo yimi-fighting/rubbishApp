@@ -1,7 +1,12 @@
 <template>
   <view>
-   <div v-if="winner">成功</div>
-    <div v-else>失败</div>
+   <div v-if="winner==='true'">
+     <image src="../../../static/success.jpg" mode=""></image>
+   </div>
+    <div v-else>
+      <image src="../../../static/fail.jpg" mode=""></image>
+    </div>
+    <button class="btn" @click="again">再来一次</button>
   </view>
 </template>
 
@@ -16,19 +21,23 @@
     },
   onLoad(option) {
     this.winner=option.winner
+  },
+  methods:{
+    again(){
+      uni.switchTab({
+         url:'/pages/game/game'
+      })
+    }
   }
   }
 </script>
 
 <style lang="scss">
-.item{
-display: flex;
-justify-content: space-around;
-.btn{
-  width: 50px;
-  height: 50px;
-  background-color: pink;
-  margin: 5px;
-}
-}
+  image{
+    width: 100vw;
+    height: 90vh;
+  }
+  .btn{
+    background-color: #00cb79;
+  }
 </style>

@@ -135,12 +135,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
 
-
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
 //
 //
 //
@@ -148,7 +150,12 @@ exports.default = void 0;
 //
 //
 //
-var _default = {
+//
+//
+//
+//
+//
+var _default = (0, _defineProperty2.default)({
   data: function data() {
     return {
       winner: false
@@ -158,8 +165,15 @@ var _default = {
   onLoad: function onLoad(option) {
     this.winner = option.winner;
   }
-};
+}, "methods", {
+  again: function again() {
+    uni.switchTab({
+      url: '/pages/game/game'
+    });
+  }
+});
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

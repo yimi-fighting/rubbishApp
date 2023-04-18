@@ -1,1 +1,1 @@
-<view><block wx:if="{{winner}}"><view class="_div">成功</view></block><block wx:else><view class="_div">失败</view></block></view>
+<view><block wx:if="{{winner==='true'}}"><view class="_div"><image src="../../../static/success.jpg" mode></image></view></block><block wx:else><view class="_div"><image src="../../../static/fail.jpg" mode></image></view></block><button data-event-opts="{{[['tap',[['again',['$event']]]]]}}" class="btn" bindtap="__e">再来一次</button></view>

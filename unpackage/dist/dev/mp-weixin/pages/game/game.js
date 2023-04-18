@@ -208,8 +208,8 @@ var _default = {
       options: {
         x: 6,
         y: 5,
-        z: 3,
-        random: 0.3,
+        z: 4,
+        random: 0.2,
         maxCard: 10
       }
     };

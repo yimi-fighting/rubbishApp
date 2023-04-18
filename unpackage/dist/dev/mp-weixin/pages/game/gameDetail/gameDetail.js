@@ -149,9 +149,13 @@ var _contentType = _interopRequireDefault(__webpack_require__(/*! ../../../tool/
 //
 //
 //
+//
+//
 // 引入垃圾总和的数组
 var Card = /*#__PURE__*/function () {
   // 卡片的宽高,只有原本高度的一半，因为之后一个卡片占2*2的数组大小，方便形成上层卡片压到下层卡片的某个角的效果。
+
+  // 偏移量
 
   function Card(_ref) {
     var x = _ref.x,
@@ -166,7 +170,7 @@ var Card = /*#__PURE__*/function () {
     this.val = key;
     this.content = {};
     this.cover = false;
-    this.style = "top: ".concat(y * Card.y + 30, "px;left:").concat(x * Card.x + 30, "px;");
+    this.style = "top: ".concat(y * Card.y + Card.offsety, "px;left:").concat(x * Card.x + Card.offsetx, "px;");
   }
   (0, _createClass2.default)(Card, [{
     key: "setVal",
@@ -180,11 +184,23 @@ var Card = /*#__PURE__*/function () {
     value: function setContentType(list) {
       Card.contentType = list;
     }
+  }, {
+    key: "setCardOffsetX",
+    value: function setCardOffsetX(offset) {
+      Card.offsetx = offset * 30;
+    }
+  }, {
+    key: "setCardOffsetY",
+    value: function setCardOffsetY(offsety) {
+      Card.offsety = offsety * 30;
+    }
   }]);
   return Card;
 }();
 (0, _defineProperty2.default)(Card, "x", 20);
 (0, _defineProperty2.default)(Card, "y", 25);
+(0, _defineProperty2.default)(Card, "offsetx", 25);
+(0, _defineProperty2.default)(Card, "offsety", 25);
 (0, _defineProperty2.default)(Card, "contentType", []);
 var _default = {
   data: function data() {
@@ -248,7 +264,7 @@ var _default = {
         this.saveList = this.saveList.slice(0, _index).concat(this.saveList.slice(_index + 1));
       }
       // 重新设置item的style
-      item.style = "left:".concat((this.penddingList.length - 1) * Card.x * 2 + 60, "px;").concat(item.content.style);
+      item.style = "left:".concat((this.penddingList.length - 1) * Card.x * 2 + 30 * 2, "px;").concat(item.content.style);
       this.penddingList.push(item);
       // 重新计算遮挡关系
       this.calcCover();
@@ -257,7 +273,7 @@ var _default = {
       setTimeout(function () {
         // 判断是否成功或失败
         _this.isWin();
-      }, 500);
+      }, 300);
     },
     // 判断是否成功或失败
     isWin: function isWin() {
@@ -286,10 +302,10 @@ var _default = {
             });
             // 重新更新penddingList中的卡片样式
             _this2.penddingList = _this2.penddingList.map(function (e, index) {
-              e.style = "left:".concat((index - 1) * Card.x * 2 + 60, "px;").concat(e.content.style);
+              e.style = "left:".concat((index - 1) * Card.x * 2 + 30 * 2, "px;").concat(e.content.style);
               return e;
             });
-          }, 500);
+          }, 300);
         }
       });
     },
@@ -388,34 +404,33 @@ var _default = {
             } else if (k > 0 && map[k - 1][i][j]) {
               // 正底下不能有卡片
               canSetCard = false;
+            } else if (Math.random() > random) {
+              canSetCard = false;
             }
             // 如果这个位置可以放置卡片，那么根据随机数，设置卡片的密度
             if (canSetCard) {
               var rand = Math.random();
-              if (rand < random) {
-                // 设置卡片
-                var card = new Card({
-                  x: j,
+              var card = new Card({
+                x: j,
+                y: i,
+                z: k,
+                key: key
+              });
+              key++;
+              map[k][i][j] = card;
+              cardList.push(card);
+              // 对称放置卡片
+              var mirror = this.xUnit - 2 - j;
+              if (mirror > j) {
+                var item = new Card({
+                  x: mirror,
                   y: i,
                   z: k,
                   key: key
                 });
+                map[k][i][mirror] = item;
                 key++;
-                map[k][i][j] = card;
-                cardList.push(card);
-                // 对称放置卡片
-                var mirror = this.xUnit - 2 - j;
-                if (mirror > j) {
-                  var item = new Card({
-                    x: mirror,
-                    y: i,
-                    z: k,
-                    key: key
-                  });
-                  map[k][i][mirror] = item;
-                  key++;
-                  cardList.push(item);
-                }
+                cardList.push(item);
               }
             }
           }
@@ -495,13 +510,13 @@ var _default = {
         if (this.penddingList.length >= 3) {
           for (var i = 0; i < 3; i++) {
             temp = this.penddingList.pop();
-            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 60, "px;").concat(temp.content.style);
+            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 30 * 2, "px;").concat(temp.content.style);
             this.saveList.push(temp);
           }
         } else {
           while (this.penddingList.length !== 0) {
             temp = this.penddingList.pop();
-            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 60, "px;").concat(temp.content.style);
+            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 30 * 2, "px;").concat(temp.content.style);
             this.saveList.push(temp);
           }
         }
@@ -517,10 +532,21 @@ var _default = {
   },
   onLoad: function onLoad(option) {
     this.options = JSON.parse(option.options);
+    if (this.options.x <= 3) {
+      Card.setCardOffsetX(8 - this.options.x - 1);
+      Card.setCardOffsetY(8 - this.options.y - 1);
+    } else {
+      Card.setCardOffsetX(8 - this.options.x + 1);
+      Card.setCardOffsetY(8 - this.options.y + 1);
+    }
+
     // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
     this.initContentType();
     // 初始化游戏
     this.init(this.options);
+  },
+  onShow: function onShow() {
+    this.init();
   }
 };
 exports.default = _default;
