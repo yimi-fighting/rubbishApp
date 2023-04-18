@@ -45,6 +45,9 @@
             }
             
         }
+        ,{
+            "path" : "pages/game/gameResult/gameResult"
+        }
     ],
   "tabBar": { //底部tabBar 
     "selectedColor": "#C00000",

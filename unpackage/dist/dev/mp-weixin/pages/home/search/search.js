@@ -101,7 +101,7 @@ var components
 try {
   components = {
     list: function () {
-      return Promise.all(/*! import() | components/list/list */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/list/list")]).then(__webpack_require__.bind(null, /*! @/components/list/list.vue */ 164))
+      return Promise.all(/*! import() | components/list/list */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/list/list")]).then(__webpack_require__.bind(null, /*! @/components/list/list.vue */ 170))
     },
   }
 } catch (e) {

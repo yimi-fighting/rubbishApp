@@ -3,9 +3,9 @@
     <div class="title">调节难度<uni-icons class="icon" color="#00cb79" type="gear" size="30"></uni-icons></div>
       <div class="container">
         <div>横向最大卡牌数：</div>
-        <slider min="1" max="8" name="x" show-value @change="(e)=>sliderChange(e,'x')" :value="options.x"></slider>
+        <slider min="2" max="8" name="x" show-value @change="(e)=>sliderChange(e,'x')" :value="options.x"></slider>
         <div>纵向最大卡牌数：</div>
-        <slider min="1" max="6" name="y" show-value  @change="(e)=>sliderChange(e,'y')" :value="options.y"></slider>
+        <slider min="2" max="6" name="y" show-value  @change="(e)=>sliderChange(e,'y')" :value="options.y"></slider>
         <div>卡片层高：</div>
         <slider min="1" max="6" name="z" show-value @change="(e)=>sliderChange(e,'z')" :value="options.z"></slider>
         <div>卡片密度：</div>

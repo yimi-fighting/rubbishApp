@@ -7,7 +7,8 @@
     "pages/home/search/search",
     "pages/webview/webview",
     "pages/test/score/score",
-    "pages/game/gameDetail/gameDetail"
+    "pages/game/gameDetail/gameDetail",
+    "pages/game/gameResult/gameResult"
   ],
   "subPackages": [],
   "window": {

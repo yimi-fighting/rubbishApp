@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(uni) {
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
@@ -124,6 +124,7 @@ exports.default = void 0;
 var _classCallCheck2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ 23));
 var _createClass2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/createClass */ 24));
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
+var _contentType = _interopRequireDefault(__webpack_require__(/*! ../../../tool/contentType.js */ 252));
 //
 //
 //
@@ -145,6 +146,10 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 //
 //
 //
+//
+//
+//
+// 引入垃圾总和的数组
 var Card = /*#__PURE__*/function () {
   // 卡片的宽高,只有原本高度的一半，因为之后一个卡片占2*2的数组大小，方便形成上层卡片压到下层卡片的某个角的效果。
 
@@ -192,7 +197,7 @@ var _default = {
       saveList: [],
       // 选择的卡片
       penddingList: [],
-      // 判断道具是否已使用过
+      // 判断道具是否可以使用
       tools: {
         three: true,
         random: true
@@ -201,12 +206,14 @@ var _default = {
       winner: false,
       // 数组的很轴和纵轴
       xUnit: 0,
-      yUnit: 0
+      yUnit: 0,
+      // 用于判断是否构成三张相同的可以消除
+      calcValueList: []
     };
   },
   methods: {
     // 初始化游戏
-    init: function init(options) {
+    init: function init() {
       // 清空list
       this.cardList = [];
       this.penddingList = [];
@@ -215,29 +222,76 @@ var _default = {
       this.tools.three = true;
       this.tools.random = true;
       // 绘制卡片地图
-      this.getMaps(options);
+      this.getMaps();
     },
     // 绘制卡片地图
-    getMaps: function getMaps(options) {
+    getMaps: function getMaps() {
       // 初始化网络地图
-      var cardMap = this.initMap(options);
+      var cardMap = this.initMap();
       // 根据卡片密度，向cardmap中放入card,此时的卡片没有内容
-      cardMap = this.setCard(cardMap, options);
+      cardMap = this.setCard(cardMap);
       // 设置卡片的内容
-      this.setContent(options);
+      this.setContent();
       // 计算卡片的遮罩关系
       this.calcCover(cardMap);
     },
-    clickCard: function clickCard(item) {
-      // 将点击的卡片冲cardList中去除，保存在penddingList中
-      var index = this.cardList.indexOf(item);
-      this.cardList = this.cardList.slice(0, index).concat(this.cardList.slice(index + 1));
+    clickCard: function clickCard(item, flag) {
+      var _this = this;
+      // flag用来判断点击的是map中的还是saveList中的
+      if (flag) {
+        // 将点击的卡片冲cardList中去除，保存在penddingList中
+        var index = this.cardList.indexOf(item);
+        this.cardList = this.cardList.slice(0, index).concat(this.cardList.slice(index + 1));
+      } else {
+        // 将点击的卡片冲cardList中去除，保存在penddingList中
+        var _index = this.saveList.indexOf(item);
+        this.saveList = this.saveList.slice(0, _index).concat(this.saveList.slice(_index + 1));
+      }
       // 重新设置item的style
-      item.style = "left:".concat((this.penddingList.length - 1) * Card.x * 2 + 60, "px");
+      item.style = "left:".concat((this.penddingList.length - 1) * Card.x * 2 + 60, "px;").concat(item.content.style);
       this.penddingList.push(item);
       // 重新计算遮挡关系
       this.calcCover();
       //判断是否有三个重复的可以消除
+      this.cancelCard();
+      setTimeout(function () {
+        // 判断是否成功或失败
+        _this.isWin();
+      }, 500);
+    },
+    // 判断是否成功或失败
+    isWin: function isWin() {
+      if (this.penddingList.length === 7) {
+        uni.navigateTo({
+          url: '/pages/game/gameResult/gameResult?winner=false'
+        });
+      } else if (this.cardList.length === 0) {
+        uni.navigateTo({
+          url: '/pages/game/gameResult/gameResult?winner=true'
+        });
+      }
+    },
+    // 三个重复的可以消除
+    cancelCard: function cancelCard() {
+      var _this2 = this;
+      this.calcValueList = new Array(this.options.maxCard).fill(0);
+      this.penddingList.some(function (item) {
+        _this2.calcValueList[item.val]++;
+        if (_this2.calcValueList[item.val] === 3) {
+          // 设置定时器，延后一点进行清除,使第三张卡片显示出来
+          setTimeout(function () {
+            // 清除penddinglist中对应的卡片
+            _this2.penddingList = _this2.penddingList.filter(function (e) {
+              return e.val !== item.val;
+            });
+            // 重新更新penddingList中的卡片样式
+            _this2.penddingList = _this2.penddingList.map(function (e, index) {
+              e.style = "left:".concat((index - 1) * Card.x * 2 + 60, "px;").concat(e.content.style);
+              return e;
+            });
+          }, 500);
+        }
+      });
     },
     // 计算卡片遮罩关系
     calcCover: function calcCover() {
@@ -269,8 +323,8 @@ var _default = {
       }
     },
     // 设置卡片的内容
-    setContent: function setContent(options) {
-      var maxCard = options.maxCard;
+    setContent: function setContent() {
+      var maxCard = this.options.maxCard;
       var valStack = new Array(maxCard);
       // 给卡片设置值
       this.cardList.forEach(function (item) {
@@ -300,11 +354,12 @@ var _default = {
       });
     },
     // 初始化地图，确认卡片位置
-    setCard: function setCard(map, options) {
-      var x = options.x,
-        y = options.y,
-        z = options.z,
-        random = options.random;
+    setCard: function setCard(map) {
+      var _this$options = this.options,
+        x = _this$options.x,
+        y = _this$options.y,
+        z = _this$options.z,
+        random = _this$options.random;
       var key = 0;
       var cardList = [];
       var shrinkSpeed = 3;
@@ -377,10 +432,11 @@ var _default = {
       return map;
     },
     // 初始化网络地图
-    initMap: function initMap(options) {
-      var x = options.x,
-        y = options.y,
-        z = options.z;
+    initMap: function initMap() {
+      var _this$options2 = this.options,
+        x = _this$options2.x,
+        y = _this$options2.y,
+        z = _this$options2.z;
       this.xUnit = x * 2;
       this.yUnit = y * 2;
       var cardMap = new Array(z);
@@ -394,93 +450,7 @@ var _default = {
     },
     // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
     initContentType: function initContentType() {
-      // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
-      var contentList = [{
-        name: '📦',
-        class: '0',
-        style: 'background: #73b0ff'
-      }, {
-        name: '📚',
-        class: '0',
-        style: 'background: #73b0ff'
-      }, {
-        name: '🔩',
-        class: '0',
-        style: 'background: #73b0ff'
-      }, {
-        name: '🍶',
-        class: '0',
-        style: 'background: #73b0ff'
-      }, {
-        name: '👗',
-        class: '0',
-        style: 'background: #73b0ff'
-      }, {
-        name: '💊',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '🔋',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '🧪',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '💉',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '🎨',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '🚨',
-        class: '1',
-        style: 'background: #ff5c74'
-      }, {
-        name: '🍎',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🍗',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🍌',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🌿',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🍂',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🐟',
-        class: '2',
-        style: 'background: #82eb62'
-      }, {
-        name: '🧻',
-        class: '3',
-        style: 'background: #ced5b2'
-      }, {
-        name: '🚬',
-        class: '3',
-        style: 'background: #ced5b2'
-      }, {
-        name: '👞',
-        class: '3',
-        style: 'background: #ced5b2'
-      }, {
-        name: '🧯',
-        class: '3',
-        style: 'background: #ced5b2'
-      }];
-
+      var contentList = _contentType.default;
       // 随机卡片样式数组
       // 洗牌算法
       var shuffle = function shuffle(arr) {
@@ -500,9 +470,50 @@ var _default = {
       this.init();
     },
     // 随机
-    random: function random() {},
+    random: function random() {
+      if (this.tools.random) {
+        // 使用洗牌算法
+        for (var i = this.cardList.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = this.cardList[i].content;
+          this.cardList[i].content = this.cardList[j].content;
+          this.cardList[j].content = temp;
+        }
+        this.tools.random = false;
+      } else {
+        uni.showToast({
+          title: '该功能只能使用一次',
+          icon: 'none'
+        });
+      }
+    },
     // 取出三张卡片
-    removeThree: function removeThree() {}
+    removeThree: function removeThree() {
+      if (this.tools.three) {
+        // 判断penddingList是否有三张卡片
+        var temp;
+        if (this.penddingList.length >= 3) {
+          for (var i = 0; i < 3; i++) {
+            temp = this.penddingList.pop();
+            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 60, "px;").concat(temp.content.style);
+            this.saveList.push(temp);
+          }
+        } else {
+          while (this.penddingList.length !== 0) {
+            temp = this.penddingList.pop();
+            temp.style = "left:".concat((this.saveList.length - 1) * Card.x * 2 + 60, "px;").concat(temp.content.style);
+            this.saveList.push(temp);
+          }
+        }
+        this.tools.three = false;
+        console.log('123', this.saveList);
+      } else {
+        uni.showToast({
+          title: '该功能只能使用一次',
+          icon: 'none'
+        });
+      }
+    }
   },
   onLoad: function onLoad(option) {
     this.options = JSON.parse(option.options);
@@ -513,6 +524,7 @@ var _default = {
   }
 };
 exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 

@@ -101,16 +101,16 @@ var components
 try {
   components = {
     chuyulaji: function () {
-      return __webpack_require__.e(/*! import() | components/chuyulaji/chuyulaji */ "components/chuyulaji/chuyulaji").then(__webpack_require__.bind(null, /*! @/components/chuyulaji/chuyulaji.vue */ 128))
+      return __webpack_require__.e(/*! import() | components/chuyulaji/chuyulaji */ "components/chuyulaji/chuyulaji").then(__webpack_require__.bind(null, /*! @/components/chuyulaji/chuyulaji.vue */ 134))
     },
     qitalaji: function () {
-      return __webpack_require__.e(/*! import() | components/qitalaji/qitalaji */ "components/qitalaji/qitalaji").then(__webpack_require__.bind(null, /*! @/components/qitalaji/qitalaji.vue */ 135))
+      return __webpack_require__.e(/*! import() | components/qitalaji/qitalaji */ "components/qitalaji/qitalaji").then(__webpack_require__.bind(null, /*! @/components/qitalaji/qitalaji.vue */ 141))
     },
     kehuishouwu: function () {
-      return __webpack_require__.e(/*! import() | components/kehuishouwu/kehuishouwu */ "components/kehuishouwu/kehuishouwu").then(__webpack_require__.bind(null, /*! @/components/kehuishouwu/kehuishouwu.vue */ 142))
+      return __webpack_require__.e(/*! import() | components/kehuishouwu/kehuishouwu */ "components/kehuishouwu/kehuishouwu").then(__webpack_require__.bind(null, /*! @/components/kehuishouwu/kehuishouwu.vue */ 148))
     },
     youhailaji: function () {
-      return __webpack_require__.e(/*! import() | components/youhailaji/youhailaji */ "components/youhailaji/youhailaji").then(__webpack_require__.bind(null, /*! @/components/youhailaji/youhailaji.vue */ 149))
+      return __webpack_require__.e(/*! import() | components/youhailaji/youhailaji */ "components/youhailaji/youhailaji").then(__webpack_require__.bind(null, /*! @/components/youhailaji/youhailaji.vue */ 155))
     },
   }
 } catch (e) {

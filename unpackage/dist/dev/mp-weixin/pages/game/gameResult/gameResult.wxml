@@ -1,0 +1,1 @@
+<view><block wx:if="{{winner}}"><view class="_div">成功</view></block><block wx:else><view class="_div">失败</view></block></view>

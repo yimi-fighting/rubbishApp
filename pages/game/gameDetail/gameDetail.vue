@@ -1,18 +1,21 @@
 <template>
   <view class="container">
+     <image src="../../../static/game2.jpg" mode=""></image>
     <div class="card_container">
-      <div class="card" :class="[item.cover?'cover':'']" v-for="item in cardList" :key="item.key" :style="item.style" @click="clickCard(item)">{{item.content.name}}</div>
+     
+      <div class="card" :class="[item.cover?'cover':'']" v-for="item in cardList" :key="item.key" :style="item.style" @click="clickCard(item,'true')">{{item.content.name}}</div>
     </div>
-    <div class="tool">
-      <button @click="removeThree">取出三张卡片</button>
-      <button @click="random">随机</button>
-      <button @click="again">再来一轮</button>
-    </div>
+
     <div class="three_card_container">
-      <div class="card">{{aaa}}</div>
+      <div class="card" v-for="item in saveList" :key="item.key" :style="item.style" @click="clickCard(item,'false')">{{item.content.name}}</div>
     </div>
     <div class="choose_card_container">
-      <div class="card" v-for="item in penddingList" :key="item.key" @click="clickCard(item)" :style="item.style">{{item.content.name}}</div>
+      <div class="card" v-for="item in penddingList" :key="item.key" :style="item.style">{{item.content.name}}</div>
+      </div>
+      <div class="tool">
+        <button @click="removeThree">取出三张卡片</button>
+        <button @click="random">随机</button>
+        <button @click="again">再来一轮</button>
       </div>
     </div>
 
@@ -20,7 +23,8 @@
 </template>
 
 <script>
-  
+  // 引入垃圾总和的数组
+  import contentType from '../../../tool/contentType.js'
   class Card {
     // 卡片的宽高,只有原本高度的一半，因为之后一个卡片占2*2的数组大小，方便形成上层卡片压到下层卡片的某个角的效果。
     static x = 20;
@@ -61,7 +65,7 @@
         saveList: [],
         // 选择的卡片
         penddingList: [],
-        // 判断道具是否已使用过
+        // 判断道具是否可以使用
         tools: {
           three: true,
           random: true,
@@ -71,11 +75,13 @@
         // 数组的很轴和纵轴
         xUnit: 0,
         yUnit: 0,
+        // 用于判断是否构成三张相同的可以消除
+        calcValueList:[],
       };
     },
     methods: {
       // 初始化游戏
-      init(options) {
+      init() {
         // 清空list
         this.cardList = []
         this.penddingList = []
@@ -84,30 +90,74 @@
         this.tools.three = true
         this.tools.random = true
         // 绘制卡片地图
-        this.getMaps(options)
+        this.getMaps()
       },
       // 绘制卡片地图
-      getMaps(options) {
+      getMaps() {
         // 初始化网络地图
-        let cardMap = this.initMap(options)
+        let cardMap = this.initMap()
         // 根据卡片密度，向cardmap中放入card,此时的卡片没有内容
-        cardMap = this.setCard(cardMap, options)
+        cardMap = this.setCard(cardMap)
         // 设置卡片的内容
-        this.setContent(options)
+        this.setContent()
         // 计算卡片的遮罩关系
         this.calcCover(cardMap)
       },
-      clickCard(item){
-        // 将点击的卡片冲cardList中去除，保存在penddingList中
-        let index=this.cardList.indexOf(item)
-        this.cardList=this.cardList.slice(0,index).concat(this.cardList.slice(index+1))
+      clickCard(item,flag){
+        // flag用来判断点击的是map中的还是saveList中的
+       if(flag){
+         // 将点击的卡片冲cardList中去除，保存在penddingList中
+         let index=this.cardList.indexOf(item)
+         this.cardList=this.cardList.slice(0,index).concat(this.cardList.slice(index+1))
+       }else{
+         // 将点击的卡片冲cardList中去除，保存在penddingList中
+         let index=this.saveList.indexOf(item)
+         this.saveList=this.saveList.slice(0,index).concat(this.saveList.slice(index+1))
+       }
         // 重新设置item的style
-        item.style=`left:${(this.penddingList.length-1)*Card.x*2+60}px`
+        item.style=`left:${(this.penddingList.length-1)*Card.x*2+60}px;${item.content.style}`
         this.penddingList.push(item)
         // 重新计算遮挡关系
         this.calcCover()
         //判断是否有三个重复的可以消除
-        
+        this.cancelCard()
+        setTimeout(()=>{
+          // 判断是否成功或失败
+          this.isWin()
+        },500)
+      },
+      // 判断是否成功或失败
+      isWin(){
+        if(this.penddingList.length===7){
+          uni.navigateTo({
+            url:'/pages/game/gameResult/gameResult?winner=false'
+          })
+        }else if(this.cardList.length===0){
+          uni.navigateTo({
+            url:'/pages/game/gameResult/gameResult?winner=true'
+          })
+        }
+      },
+      // 三个重复的可以消除
+      cancelCard(){
+        this.calcValueList=new Array(this.options.maxCard).fill(0)
+        this.penddingList.some(item=>{
+             this.calcValueList[item.val]++
+             if(this.calcValueList[item.val]===3){
+              // 设置定时器，延后一点进行清除,使第三张卡片显示出来
+              setTimeout(()=>{
+                // 清除penddinglist中对应的卡片
+                this.penddingList=this.penddingList.filter(e=>{
+                  return e.val!==item.val
+                })
+                // 重新更新penddingList中的卡片样式
+                this.penddingList=this.penddingList.map((e,index)=>{
+                  e.style=`left:${(index-1)*Card.x*2+60}px;${e.content.style}`
+                  return e
+                })
+              },500)
+             }
+        })
       },
       // 计算卡片遮罩关系
       calcCover(){
@@ -139,8 +189,8 @@
         }
       },
       // 设置卡片的内容
-      setContent(options) {
-        const { maxCard} = options
+      setContent() {
+        const { maxCard} = this.options
         const valStack = new Array(maxCard)
         // 给卡片设置值
         this.cardList.forEach((item) => {
@@ -170,13 +220,13 @@
         })
       },
       // 初始化地图，确认卡片位置
-      setCard(map, options) {
+      setCard(map) {
         const {
           x,
           y,
           z,
           random
-        } = options
+        } = this.options
         let key = 0
         const cardList = []
         const shrinkSpeed = 3
@@ -249,12 +299,12 @@
         return map
       },
       // 初始化网络地图
-      initMap(options) {
+      initMap() {
         const {
           x,
           y,
           z
-        } = options
+        } = this.options
         this.xUnit = x * 2
         this.yUnit = y * 2
         const cardMap = new Array(z)
@@ -268,93 +318,7 @@
       },
       // 根据maxCard初始化card类中的contentType数组，随机生产垃圾
       initContentType(){
-        // 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
-        const contentList= [{
-            name: '📦',
-            class: '0',
-            style: 'background: #73b0ff'
-          }, {
-            name: '📚',
-            class: '0',
-            style: 'background: #73b0ff'
-          }, {
-            name: '🔩',
-            class: '0',
-            style: 'background: #73b0ff'
-          }, {
-            name: '🍶',
-            class: '0',
-            style: 'background: #73b0ff'
-          }, {
-            name: '👗',
-            class: '0',
-            style: 'background: #73b0ff'
-          }, {
-            name: '💊',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '🔋',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '🧪',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '💉',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '🎨',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '🚨',
-            class: '1',
-            style: 'background: #ff5c74'
-          }, {
-            name: '🍎',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🍗',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🍌',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🌿',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🍂',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🐟',
-            class: '2',
-            style: 'background: #82eb62'
-          }, {
-            name: '🧻',
-            class: '3',
-            style: 'background: #ced5b2'
-          }, {
-            name: '🚬',
-            class: '3',
-            style: 'background: #ced5b2'
-          }, {
-            name: '👞',
-            class: '3',
-            style: 'background: #ced5b2'
-          }, {
-            name: '🧯',
-            class: '3',
-            style: 'background: #ced5b2'
-          }]
-          
+        const contentList=contentType
         // 随机卡片样式数组
         // 洗牌算法
         let shuffle=(arr)=>{
@@ -367,17 +331,55 @@
         const selected=shuffle(contentList).slice(0,this.options.maxCard)
          Card.setContentType(selected)
       },
+      
       // 再来一轮
       again() {
         this.init()
       },
       // 随机
       random() {
-
+        if(this.tools.random){
+          // 使用洗牌算法
+          for (let i = this.cardList.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            let temp=this.cardList[i].content
+            this.cardList[i].content=this.cardList[j].content
+            this.cardList[j].content=temp
+          }
+          this.tools.random=false
+        }else{
+          uni.showToast({
+            title:'该功能只能使用一次',
+            icon:'none'
+          })
+        }
       },
       // 取出三张卡片
       removeThree() {
-
+        if(this.tools.three){
+          // 判断penddingList是否有三张卡片
+          let temp;
+          if(this.penddingList.length>=3){
+            for(let i=0;i<3;i++){
+              temp=this.penddingList.pop()
+             temp.style=`left:${(this.saveList.length-1)*Card.x*2+60}px;${temp.content.style}`
+              this.saveList.push(temp)
+            }
+          }else{
+            while(this.penddingList.length!==0){
+              temp=this.penddingList.pop()
+              temp.style=`left:${(this.saveList.length-1)*Card.x*2+60}px;${temp.content.style}`
+              this.saveList.push(temp)
+            }
+          }
+          this.tools.three=false
+          console.log('123',this.saveList);
+        }else{
+          uni.showToast({
+            title:'该功能只能使用一次',
+            icon:'none'
+          })
+        }
       }
     },
     onLoad(option) {
@@ -396,7 +398,12 @@
     width: 100vw;
     height: 100vh;
     position: relative;
-
+    image{
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      opacity: 0.6;
+    }
     .card_container {
       position: relative;
       padding: 30px;
@@ -429,17 +436,19 @@
       position: relative;
       display: flex;
       margin-top: 20px;
-      width: 95%;
-      height: 78px;
+      width: 90%;left: 10px;
+      height: 70px;
       padding: 10px 15px;
-      background-color: #82eb62;
+      // background-color: #ccebc6;
       border: 1px solid black;
       border-radius: 20px;
       box-sizing: border-box;
       margin: 10px 10px;
+      // opacity: 0.3;
 
       .card {
         margin-right: 7px;
+        // opacity: 10;
       }
     }
   }
@@ -460,26 +469,6 @@
       transform: scale3d(1.1, 1.1, 1.1);
       z-index: 1;
     }
-
-    // width: 40px;
-    // height: 50px;
-    // // background-color: pink;
-    // border: 1px solid black;
-    // border-radius: 5px;
-
-    // .content{
-    //   padding: 2px;
-    //   height: 40px;
-    //   // background-color: #73d3ff;
-    //   background-color: white;
-    //   font-size: 25px;
-    //   text-align: center;
-    //   line-height: 40px;
-    //   border-radius: 5px;
-    //   // pointer-events: none;
-    //     // box-shadow: 0px 3px 0 0 #999, 0 8px 0 0 #666, 0 8px 0 2px #000, 0 0 0 2px #000;
-    //     box-shadow: 0px 3px 0 0 #fff, 0 8px 0 0 #ddd, 0 8px 0 2px #333, 0 0 0 2px #333;
-    // }
   }
 
   .cover {
