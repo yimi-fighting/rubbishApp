@@ -43,8 +43,8 @@
     <uni-drawer ref="showLeft" mode="left" :width="300">
       <!-- 抽屉滚动效果 -->
       <scroll-view class="scroll-view-box" scroll-y="true">
-      <uni-collapse accordion v-model="accordionVal" class="collapse_container">
-        <uni-collapse-item :title="item.title" :show-arrow="false" v-for="(item,index) in photoList" :key="index" class="collapse_item">
+      <uni-collapse accordion v-model="accordionVal" class="collapse_container" >
+        <uni-collapse-item :open="index===0?true:false" :title="item.title"  v-for="(item,index) in photoList" :key="index" class="collapse_item">
             <div v-if="item.isShow" v-for="(item2,index2) in item.detailList" :key="index2" class="content">
               <div class="name">{{item2.name}}</div>
               <div :class="[item2.class=='厨余垃圾'?'chuyulaji type':item2.class=='其他垃圾'?'qitalaji type':item2.class=='可回收物'?'kehuishouwu type':'youhailaji type']">{{item2.class}}</div>
@@ -91,15 +91,7 @@
         list_search: [],
         // 手风琴
         accordionVal: '1',
-        photoList: [
-      //     {
-      //   "name": "化妆品",
-      //   "trust": 20,
-      //   "lajitype": 1,
-      //   "lajitip": "化妆品是有毒有害垃圾，常见包括废电池、废油漆桶、各类过期药品等。投放时应注意尽量排空内容物或包裹妥善后投放。",
-      //   title:`化妆品，20%`
-      // },
-      ],
+        photoList: [],
       };
     },
     methods: {

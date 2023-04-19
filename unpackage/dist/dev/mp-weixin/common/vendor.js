@@ -58,6 +58,118 @@ module.exports = _nonIterableRest, module.exports.__esModule = true, module.expo
 
 /***/ }),
 
+/***/ 105:
+/*!******************************************************!*\
+  !*** D:/111代码/111前端/uniapp/垃圾分类/tool/contentType.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+// 0:可回收垃圾；1：有害垃圾；2：湿垃圾；3：干垃圾
+var _default = [{
+  name: '📦',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🚲',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🍱',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🎤',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🕰️',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🎻',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🛹',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '🎮',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '📺',
+  class: '0',
+  style: 'background: #73b0ff'
+}, {
+  name: '💊',
+  class: '1',
+  style: 'background: #ff5c74'
+}, {
+  name: '🧪',
+  class: '1',
+  style: 'background: #ff5c74'
+}, {
+  name: '💉',
+  class: '1',
+  style: 'background: #ff5c74'
+}, {
+  name: '🎨',
+  class: '1',
+  style: 'background: #ff5c74'
+}, {
+  name: '🍗',
+  class: '2',
+  style: 'background: #82eb62'
+}, {
+  name: '🍌',
+  class: '2',
+  style: 'background: #82eb62'
+}, {
+  name: '🌿',
+  class: '2',
+  style: 'background: #82eb62'
+}, {
+  name: '🍂',
+  class: '2',
+  style: 'background: #82eb62'
+}, {
+  name: '🐟',
+  class: '2',
+  style: 'background: #82eb62'
+}, {
+  name: '🧻',
+  class: '3',
+  style: 'background: #ced5b2'
+}, {
+  name: '🚬',
+  class: '3',
+  style: 'background: #ced5b2'
+}, {
+  name: '🕶️',
+  class: '3',
+  style: 'background: #ced5b2'
+}, {
+  name: '🗑️️',
+  class: '3',
+  style: 'background: #ced5b2'
+}, {
+  name: '👞',
+  class: '3',
+  style: 'background: #ced5b2'
+}];
+exports.default = _default;
+
+/***/ }),
+
 /***/ 11:
 /*!***************************************************************!*\
   !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
@@ -189,7 +301,29 @@ module.exports = _setPrototypeOf, module.exports.__esModule = true, module.expor
 
 /***/ }),
 
-/***/ 167:
+/***/ 17:
+/*!*************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/isNativeReflectConstruct.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+module.exports = _isNativeReflectConstruct, module.exports.__esModule = true, module.exports["default"] = module.exports;
+
+/***/ }),
+
+/***/ 170:
 /*!**************************************************************************************!*\
   !*** D:/111代码/111前端/uniapp/垃圾分类/uni_modules/uni-icons/components/uni-icons/icons.js ***!
   \**************************************************************************************/
@@ -1208,28 +1342,6 @@ var _default = {
   }]
 };
 exports.default = _default;
-
-/***/ }),
-
-/***/ 17:
-/*!*************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/isNativeReflectConstruct.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-  try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-module.exports = _isNativeReflectConstruct, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
@@ -4202,7 +4314,7 @@ function resolveLocaleChain(locale) {
 
 /***/ }),
 
-/***/ 224:
+/***/ 227:
 /*!**********************************************************************************************************!*\
   !*** D:/111代码/111前端/uniapp/垃圾分类/uni_modules/uni-transition/components/uni-transition/createAnimation.js ***!
   \**********************************************************************************************************/
@@ -12523,6 +12635,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getList = getList;
+exports.getQuestions = getQuestions;
 exports.identifyPhoto = identifyPhoto;
 exports.news = news;
 exports.search = search;
@@ -12662,17 +12775,19 @@ function _identifyPhoto() {
           case 2:
             _yield$uni$$http$post4 = _context4.sent;
             res = _yield$uni$$http$post4.data;
+            console.log('res', res);
             if (!(res.code === 200)) {
-              _context4.next = 8;
+              _context4.next = 9;
               break;
             }
             return _context4.abrupt("return", res.result.list);
-          case 8:
+          case 9:
+            console.log('111111');
             uni.showToast({
               title: res.msg,
               icon: 'none'
             });
-          case 9:
+          case 11:
           case "end":
             return _context4.stop();
         }
@@ -12680,6 +12795,42 @@ function _identifyPhoto() {
     }, _callee4);
   }));
   return _identifyPhoto.apply(this, arguments);
+}
+function getQuestions() {
+  return _getQuestions.apply(this, arguments);
+}
+function _getQuestions() {
+  _getQuestions = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5() {
+    var _yield$uni$$http$post5, res;
+    return _regenerator.default.wrap(function _callee5$(_context5) {
+      while (1) {
+        switch (_context5.prev = _context5.next) {
+          case 0:
+            _context5.next = 2;
+            return uni.$http.post('https://apis.tianapi.com/anslajifenlei/index', {
+              key: 'b8441c296ca222b20e6f891bb07167b8'
+            });
+          case 2:
+            _yield$uni$$http$post5 = _context5.sent;
+            res = _yield$uni$$http$post5.data;
+            if (!(res.code === 200)) {
+              _context5.next = 8;
+              break;
+            }
+            return _context5.abrupt("return", res.result);
+          case 8:
+            uni.showToast({
+              title: res.msg,
+              icon: 'none'
+            });
+          case 9:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5);
+  }));
+  return _getQuestions.apply(this, arguments);
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
@@ -12718,6 +12869,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getNewList = getNewList;
+exports.setXY = setXY;
 exports.typeToClass = typeToClass;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 46));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 48));
@@ -12750,12 +12902,13 @@ function getNewList(list) {
             case 0:
               // 添加title
               percentage = item.trust < 1 ? item.trust * 100 : item.trust;
+              percentage = percentage.toFixed(2);
               item.title = "".concat(item.name, " | \u76F8\u4F3C\u5EA6").concat(percentage, "%");
               // 添加list
               // 调用接口查询,根据name调用search得到详细的垃圾种类，将其存在对象的list属性中
-              _context.next = 4;
+              _context.next = 5;
               return (0, _index.search)(item.name);
-            case 4:
+            case 5:
               list = _context.sent;
               if (list === undefined) {
                 item.detailList = [];
@@ -12767,7 +12920,7 @@ function getNewList(list) {
                 item.isShow = true;
               }
               return _context.abrupt("return", item);
-            case 7:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -12779,6 +12932,13 @@ function getNewList(list) {
     };
   }());
   return arr;
+}
+function setXY(list) {
+  return list.map(function (item) {
+    item.x = Math.random() * 300;
+    item.y = Math.random() * 150;
+    return item;
+  });
 }
 
 /***/ }),
