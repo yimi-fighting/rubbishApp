@@ -19,31 +19,15 @@
     }
       ,{
             "path" : "pages/webview/webview"
-            // "style" :                                                                                    
-            // {
-            //     "navigationBarTitleText": "",
-            //     "enablePullDownRefresh": false
-            // }
             
         }
         ,{
             "path" : "pages/test/score/score"
-            // "style" :                                                                                    
-            // {
-            //     "navigationBarTitleText": "",
-            //     "enablePullDownRefresh": false
-            // }
             
         }
         
         ,{
-            "path" : "pages/game/gameDetail/gameDetail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
+            "path" : "pages/game/gameDetail/gameDetail"
         }
         ,{
             "path" : "pages/game/gameResult/gameResult"

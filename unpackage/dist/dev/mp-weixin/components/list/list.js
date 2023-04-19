@@ -163,8 +163,23 @@ var _index = __webpack_require__(/*! ../../tool/index.js */ 50);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: "list",
+  props: ['msg'],
   data: function data() {
     var list = this.$store.state.list;
     // console.log('2131231',list);

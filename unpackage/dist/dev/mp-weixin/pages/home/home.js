@@ -174,6 +174,7 @@ exports.default = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 46));
 var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 48));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
 var _index = __webpack_require__(/*! ../../api/index.js */ 49);
 var _index2 = __webpack_require__(/*! ../../tool/index.js */ 50);
 //
@@ -249,18 +250,22 @@ var _index2 = __webpack_require__(/*! ../../tool/index.js */ 50);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   data: function data() {
-    return {
+    var _ref;
+    return _ref = {
+      src: "",
       page: 1,
-      list: [],
-      src: '',
-      show: 0,
-      list_search: [],
-      // 手风琴
-      accordionVal: '1',
-      photoList: []
-    };
+      list: []
+    }, (0, _defineProperty2.default)(_ref, "src", ''), (0, _defineProperty2.default)(_ref, "show", 0), (0, _defineProperty2.default)(_ref, "list_search", []), (0, _defineProperty2.default)(_ref, "accordionVal", '1'), (0, _defineProperty2.default)(_ref, "photoList", []), _ref;
   },
   methods: {
     search: function search(e) {
@@ -329,49 +334,61 @@ var _default = {
         url: "/pages/webview/webview?url=".concat(url, "&nav=").concat(navtitle)
       });
     },
+    take: function take() {
+      this.show = 1;
+    },
     takePohoto: function takePohoto() {
       var _this2 = this;
       // console.log('takephoto');
-      this.show = 1;
-      var ctx = uni.createCameraContext();
-      // console.log(ctx);
-      ctx.takePhoto({
-        quality: 'high',
-        success: function () {
-          var _success = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(res) {
-            var base64Img, result, new_list;
-            return _regenerator.default.wrap(function _callee3$(_context3) {
-              while (1) {
-                switch (_context3.prev = _context3.next) {
-                  case 0:
-                    _this2.src = res.tempImagePath;
-                    // 显示图片
-                    _this2.show = 2;
-                    // 将本地图片转成array类型
-                    base64Img = uni.getFileSystemManager().readFileSync(res.tempImagePath, 'base64'); // 发送请求进行图片识别
-                    _context3.next = 5;
-                    return (0, _index.identifyPhoto)(base64Img);
-                  case 5:
-                    result = _context3.sent;
-                    _context3.next = 8;
-                    return Promise.all((0, _index2.getNewList)(result));
-                  case 8:
-                    new_list = _context3.sent;
-                    _this2.photoList = new_list;
-                    _this2.$refs.showLeft.open();
-                  case 11:
-                  case "end":
-                    return _context3.stop();
-                }
+      switch (this.show) {
+        case 0:
+          this.show = 1;
+          break;
+        case 1:
+          var ctx = uni.createCameraContext();
+          // console.log(ctx);
+          ctx.takePhoto({
+            quality: 'high',
+            success: function () {
+              var _success = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(res) {
+                var base64Img, result, new_list;
+                return _regenerator.default.wrap(function _callee3$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        _this2.src = res.tempImagePath;
+                        // 显示图片
+                        _this2.show = 2;
+                        // 将本地图片转成array类型
+                        base64Img = uni.getFileSystemManager().readFileSync(res.tempImagePath, 'base64'); // 发送请求进行图片识别
+                        _context3.next = 5;
+                        return (0, _index.identifyPhoto)(base64Img);
+                      case 5:
+                        result = _context3.sent;
+                        _context3.next = 8;
+                        return Promise.all((0, _index2.getNewList)(result));
+                      case 8:
+                        new_list = _context3.sent;
+                        _this2.photoList = new_list;
+                        _this2.$refs.showLeft.open();
+                      case 11:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }
+                }, _callee3);
+              }));
+              function success(_x) {
+                return _success.apply(this, arguments);
               }
-            }, _callee3);
-          }));
-          function success(_x) {
-            return _success.apply(this, arguments);
-          }
-          return success;
-        }()
-      });
+              return success;
+            }()
+          });
+          break;
+        case 2:
+          this.show = 1;
+          break;
+      }
     },
     change: function change(e) {
       var _this3 = this;

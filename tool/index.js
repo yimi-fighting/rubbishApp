@@ -1,5 +1,5 @@
 import {
-  search
+  searchImg
 } from '../api/index.js'
 
 export function typeToClass(list) {
@@ -29,7 +29,7 @@ export function getNewList(list) {
     item.title = `${item.name} | 相似度${percentage}%`
     // 添加list
     // 调用接口查询,根据name调用search得到详细的垃圾种类，将其存在对象的list属性中
-    const list = await search(item.name)
+    const list = await searchImg(item.name)
     if(list===undefined){
       item.detailList = []
       //判断是否显示手风琴的下拉内容

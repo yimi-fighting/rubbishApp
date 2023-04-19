@@ -12639,6 +12639,7 @@ exports.getQuestions = getQuestions;
 exports.identifyPhoto = identifyPhoto;
 exports.news = news;
 exports.search = search;
+exports.searchImg = searchImg;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 46));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 48));
 // 获取热搜垃圾分类的列表
@@ -12718,17 +12719,50 @@ function _search() {
   }));
   return _search.apply(this, arguments);
 }
-function news(_x3) {
-  return _news.apply(this, arguments);
+function searchImg(_x3) {
+  return _searchImg.apply(this, arguments);
 }
-function _news() {
-  _news = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(page) {
+function _searchImg() {
+  _searchImg = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee3(word) {
     var _yield$uni$$http$post3, res;
     return _regenerator.default.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
+            return uni.$http.post('https://apis.tianapi.com/lajifenlei/index', {
+              //   指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
+              key: 'b8441c296ca222b20e6f891bb07167b8',
+              word: word
+            });
+          case 2:
+            _yield$uni$$http$post3 = _context3.sent;
+            res = _yield$uni$$http$post3.data;
+            if (!(res.code === 200)) {
+              _context3.next = 6;
+              break;
+            }
+            return _context3.abrupt("return", res.result.list);
+          case 6:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3);
+  }));
+  return _searchImg.apply(this, arguments);
+}
+function news(_x4) {
+  return _news.apply(this, arguments);
+}
+function _news() {
+  _news = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(page) {
+    var _yield$uni$$http$post4, res;
+    return _regenerator.default.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.next = 2;
             return uni.$http.post('https://apis.tianapi.com/lajifenleinews/index', {
               key: 'b8441c296ca222b20e6f891bb07167b8',
               num: 10,
@@ -12736,13 +12770,13 @@ function _news() {
               page: page
             });
           case 2:
-            _yield$uni$$http$post3 = _context3.sent;
-            res = _yield$uni$$http$post3.data;
+            _yield$uni$$http$post4 = _context4.sent;
+            res = _yield$uni$$http$post4.data;
             if (!(res.code === 200)) {
-              _context3.next = 8;
+              _context4.next = 8;
               break;
             }
-            return _context3.abrupt("return", res.result.newslist);
+            return _context4.abrupt("return", res.result.newslist);
           case 8:
             uni.showToast({
               title: res.msg,
@@ -12750,65 +12784,27 @@ function _news() {
             });
           case 9:
           case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-  return _news.apply(this, arguments);
-}
-function identifyPhoto(_x4) {
-  return _identifyPhoto.apply(this, arguments);
-}
-function _identifyPhoto() {
-  _identifyPhoto = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee4(base64) {
-    var _yield$uni$$http$post4, res;
-    return _regenerator.default.wrap(function _callee4$(_context4) {
-      while (1) {
-        switch (_context4.prev = _context4.next) {
-          case 0:
-            _context4.next = 2;
-            return uni.$http.post('https://apis.tianapi.com/imglajifenlei/index', {
-              key: 'b8441c296ca222b20e6f891bb07167b8',
-              img: base64
-            });
-          case 2:
-            _yield$uni$$http$post4 = _context4.sent;
-            res = _yield$uni$$http$post4.data;
-            console.log('res', res);
-            if (!(res.code === 200)) {
-              _context4.next = 9;
-              break;
-            }
-            return _context4.abrupt("return", res.result.list);
-          case 9:
-            console.log('111111');
-            uni.showToast({
-              title: res.msg,
-              icon: 'none'
-            });
-          case 11:
-          case "end":
             return _context4.stop();
         }
       }
     }, _callee4);
   }));
+  return _news.apply(this, arguments);
+}
+function identifyPhoto(_x5) {
   return _identifyPhoto.apply(this, arguments);
 }
-function getQuestions() {
-  return _getQuestions.apply(this, arguments);
-}
-function _getQuestions() {
-  _getQuestions = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5() {
+function _identifyPhoto() {
+  _identifyPhoto = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee5(base64) {
     var _yield$uni$$http$post5, res;
     return _regenerator.default.wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.next = 2;
-            return uni.$http.post('https://apis.tianapi.com/anslajifenlei/index', {
-              key: 'b8441c296ca222b20e6f891bb07167b8'
+            return uni.$http.post('https://apis.tianapi.com/imglajifenlei/index', {
+              key: 'b8441c296ca222b20e6f891bb07167b8',
+              img: base64
             });
           case 2:
             _yield$uni$$http$post5 = _context5.sent;
@@ -12817,7 +12813,7 @@ function _getQuestions() {
               _context5.next = 8;
               break;
             }
-            return _context5.abrupt("return", res.result);
+            return _context5.abrupt("return", res.result.list);
           case 8:
             uni.showToast({
               title: res.msg,
@@ -12829,6 +12825,42 @@ function _getQuestions() {
         }
       }
     }, _callee5);
+  }));
+  return _identifyPhoto.apply(this, arguments);
+}
+function getQuestions() {
+  return _getQuestions.apply(this, arguments);
+}
+function _getQuestions() {
+  _getQuestions = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee6() {
+    var _yield$uni$$http$post6, res;
+    return _regenerator.default.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.next = 2;
+            return uni.$http.post('https://apis.tianapi.com/anslajifenlei/index', {
+              key: 'b8441c296ca222b20e6f891bb07167b8'
+            });
+          case 2:
+            _yield$uni$$http$post6 = _context6.sent;
+            res = _yield$uni$$http$post6.data;
+            if (!(res.code === 200)) {
+              _context6.next = 8;
+              break;
+            }
+            return _context6.abrupt("return", res.result);
+          case 8:
+            uni.showToast({
+              title: res.msg,
+              icon: 'none'
+            });
+          case 9:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6);
   }));
   return _getQuestions.apply(this, arguments);
 }
@@ -12907,7 +12939,7 @@ function getNewList(list) {
               // 添加list
               // 调用接口查询,根据name调用search得到详细的垃圾种类，将其存在对象的list属性中
               _context.next = 5;
-              return (0, _index.search)(item.name);
+              return (0, _index.searchImg)(item.name);
             case 5:
               list = _context.sent;
               if (list === undefined) {

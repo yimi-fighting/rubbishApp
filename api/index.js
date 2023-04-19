@@ -27,11 +27,23 @@ export async function search(word){
   })
   if(res.code===200){
     return res.result.list
-  }else{
+  }
+  else{
    uni.showToast({
      title:res.msg,
      icon:'none'
    })
+  }
+}
+
+export async function searchImg(word){
+  const {data:res}=await uni.$http.post('https://apis.tianapi.com/lajifenlei/index',{
+    //   指定垃圾类型，0为可回收、1为有害、2为厨余(湿)、3为其他(干)
+    key:'b8441c296ca222b20e6f891bb07167b8',
+    word:word
+  })
+  if(res.code===200){
+    return res.result.list
   }
 }
 
@@ -57,11 +69,9 @@ export async function identifyPhoto(base64){
     key:'b8441c296ca222b20e6f891bb07167b8',
     img:base64
   })
-  console.log('res',res);
   if(res.code===200){
     return res.result.list
   }else{
-    console.log('111111');
     uni.showToast({
       title:res.msg,
       icon:'none'

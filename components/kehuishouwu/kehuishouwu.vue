@@ -12,7 +12,7 @@
         <rich-text :nodes="nodes2"></rich-text>
       </div>
     </div>
-    <list></list>
+    <list msg="可回收物"></list>
   </view>
 </template>
 

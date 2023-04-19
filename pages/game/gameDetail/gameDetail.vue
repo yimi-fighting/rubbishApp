@@ -66,8 +66,10 @@
     }
   }
   export default {
+    // let innerAudioContext = uni.createInnerAudioContext();
     data() {
       return {
+        // innerAudioContext:inner,
         options: {},
         aaa: '🧻',
         // 所有卡片
@@ -418,6 +420,23 @@
     },
     onShow() {
       this.init()
+      this.innerAudioContext = uni.createInnerAudioContext();
+      this.innerAudioContext.autoplay = true;
+     this. innerAudioContext.loop=true;
+      this.innerAudioContext.src = "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3";
+      this.innerAudioContext.onPlay(() => {
+        console.log('开始播放');
+      });
+     this. innerAudioContext.onError((res) => {
+        console.log(res.errMsg);
+        console.log(res.errCode);
+      });
+    },
+    onHide() {
+      this.innerAudioContext.pause()
+    },
+    onUnload() {
+      this.innerAudioContext.pause()
     }
 
   }

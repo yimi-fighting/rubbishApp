@@ -203,8 +203,10 @@ var Card = /*#__PURE__*/function () {
 (0, _defineProperty2.default)(Card, "offsety", 25);
 (0, _defineProperty2.default)(Card, "contentType", []);
 var _default = {
+  // let innerAudioContext = uni.createInnerAudioContext();
   data: function data() {
     return {
+      // innerAudioContext:inner,
       options: {},
       aaa: '🧻',
       // 所有卡片
@@ -548,6 +550,23 @@ var _default = {
   },
   onShow: function onShow() {
     this.init();
+    this.innerAudioContext = uni.createInnerAudioContext();
+    this.innerAudioContext.autoplay = true;
+    this.innerAudioContext.loop = true;
+    this.innerAudioContext.src = "https://bjetxgzv.cdn.bspapp.com/VKCEYUGU-hello-uniapp/2cc220e0-c27a-11ea-9dfb-6da8e309e0d8.mp3";
+    this.innerAudioContext.onPlay(function () {
+      console.log('开始播放');
+    });
+    this.innerAudioContext.onError(function (res) {
+      console.log(res.errMsg);
+      console.log(res.errCode);
+    });
+  },
+  onHide: function onHide() {
+    this.innerAudioContext.pause();
+  },
+  onUnload: function onUnload() {
+    this.innerAudioContext.pause();
   }
 };
 exports.default = _default;

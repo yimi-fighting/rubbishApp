@@ -24,6 +24,23 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+.title.data-v-48015944 {
+  display: flex;
+  background-color: #f0f0f0;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding-left: 10px;
+}
+.title .iconfont.data-v-48015944 {
+  font-size: 30px;
+  margin-left: 10px;
+}
 .list.data-v-48015944 {
   padding: 0 10px;
 }

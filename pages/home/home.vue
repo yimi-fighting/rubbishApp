@@ -28,7 +28,7 @@
     <!-- 拍照识别 -->
     <div class="photograph" @click="takePohoto">
       <div v-if="show===1">
-        <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 300px;"></camera>
+        <camera device-position="back" flash="off" style="width: 100%; height: 300px;"></camera>
       </div>
       <div v-else-if="show===2">
         <image :src="src" mode="widthFix" class="photo_img"></image>
@@ -37,20 +37,28 @@
         <i class="iconfont icon-weibiaoti1"></i>
       </div>
       <div class="text">拍照识别</div>
+
     </div>
+    <!-- <camera device-position="back" flash="off" @error="error" style="width: 100%; height: 300px;"></camera>
+            <button type="primary" @click="takePhoto">拍照</button>
+            <view>预览</view>
+            <image mode="widthFix" :src="src"></image> -->
     <!-- 弹出层 -->
     <!-- <button @click="open">点击</button> -->
     <uni-drawer ref="showLeft" mode="left" :width="300">
       <!-- 抽屉滚动效果 -->
       <scroll-view class="scroll-view-box" scroll-y="true">
-      <uni-collapse accordion v-model="accordionVal" class="collapse_container" >
-        <uni-collapse-item :open="index===0?true:false" :title="item.title"  v-for="(item,index) in photoList" :key="index" class="collapse_item">
+        <uni-collapse accordion v-model="accordionVal" class="collapse_container">
+          <uni-collapse-item :open="index===0?true:false" :title="item.title" v-for="(item,index) in photoList"
+            :key="index" class="collapse_item">
             <div v-if="item.isShow" v-for="(item2,index2) in item.detailList" :key="index2" class="content">
               <div class="name">{{item2.name}}</div>
-              <div :class="[item2.class=='厨余垃圾'?'chuyulaji type':item2.class=='其他垃圾'?'qitalaji type':item2.class=='可回收物'?'kehuishouwu type':'youhailaji type']">{{item2.class}}</div>
+              <div
+                :class="[item2.class=='厨余垃圾'?'chuyulaji type':item2.class=='其他垃圾'?'qitalaji type':item2.class=='可回收物'?'kehuishouwu type':'youhailaji type']">
+                {{item2.class}}</div>
             </div>
-        </uni-collapse-item>
-      </uni-collapse>
+          </uni-collapse-item>
+        </uni-collapse>
       </scroll-view>
     </uni-drawer>
 
@@ -84,6 +92,7 @@
   export default {
     data() {
       return {
+        src: "",
         page: 1,
         list: [],
         src: '',
@@ -128,38 +137,50 @@
           url: `/pages/webview/webview?url=${url}&nav=${navtitle}`
         })
       },
+      take() {
+        this.show = 1
+      },
       takePohoto() {
         // console.log('takephoto');
-        this.show = 1
-        const ctx = uni.createCameraContext()
-        // console.log(ctx);
-        ctx.takePhoto({
-          quality: 'high',
-          success: async (res) => {
-            this.src = res.tempImagePath
-            // 显示图片
-            this.show = 2
-            // 将本地图片转成array类型
-            const base64Img = uni.getFileSystemManager().readFileSync(res.tempImagePath, 'base64')
-            // 发送请求进行图片识别
-            const result= await identifyPhoto(base64Img)
-            // getnewList返回为一个promise数组，需要用promiseall获取每个promise的值
-            const new_list= await Promise.all(getNewList(result))
-            this.photoList=new_list
-            this.$refs.showLeft.open()
-          }
-        })
+        switch (this.show) {
+          case 0:
+            this.show = 1
+            break;
+          case 1:
+            const ctx = uni.createCameraContext()
+            // console.log(ctx);
+            ctx.takePhoto({
+              quality: 'high',
+              success: async (res) => {
+                this.src = res.tempImagePath
+                // 显示图片
+                this.show = 2
+                // 将本地图片转成array类型
+                const base64Img = uni.getFileSystemManager().readFileSync(res.tempImagePath, 'base64')
+                // 发送请求进行图片识别
+                const result = await identifyPhoto(base64Img)
+                // getnewList返回为一个promise数组，需要用promiseall获取每个promise的值
+                const new_list = await Promise.all(getNewList(result))
+                this.photoList = new_list
+                this.$refs.showLeft.open()
+              }
+            })
+            break;
+          case 2:
+            this.show = 1
+            break
+
+        }
       },
       async change(e) {
-        console.log('item',e);
+        console.log('item', e);
         const name = this.photoList[e].name
         const list = await search(name)
-        console.log('typeof',list);
-        if (list===undefined) {
+        console.log('typeof', list);
+        if (list === undefined) {
           console.log('数据空');
           this.list_search = []
-        }
-        else {
+        } else {
           // 获取搜索的信息
           let new_list = typeToClass(list)
           // console.log('new_list', new_list);
@@ -186,12 +207,14 @@
   }
 
   swiper {
+
     .swiper-item,
     image {
       width: 100%;
       height: 100%;
     }
   }
+
   .search_contain {
     background-color: white;
     position: relative;
@@ -208,6 +231,7 @@
       line-height: 40px;
       color: rgb(0, 203, 121);
     }
+
     .search {
       padding-left: 40px;
       position: absolute;
@@ -215,6 +239,7 @@
       font-size: 14px;
     }
   }
+
   .photograph {
     position: relative;
 
@@ -254,6 +279,7 @@
       height: auto;
     }
   }
+
   .new_contain {
     height: auto;
     margin-top: 50px;
@@ -316,6 +342,7 @@
       }
     }
   }
+
   .photo_item {
     height: 50px;
     display: flex;
@@ -339,46 +366,52 @@
     }
   }
 
-.collapse_container{
-.collapse_item{
-  .content{
-    display: flex;
-    height: 50px;
-    padding: 0 10px;
-    line-height: 50px;
-    justify-content: space-between;
-    .type{
-      height: 30px;
-      // display: inline;
-      border-radius: 30px;
-      color: white;
-      box-sizing: border-box;
-      margin-top: 10px;
-      line-height: 30px;
-      padding: 0 10px;
-    }
-    .chuyulaji{
-      background-color: #5dab46;
-    }
-    .qitalaji{
-      background-color: #747371;
-    }
-    .kehuishouwu{
-      background-color: #0168b7;
-    }
-    .youhailaji{
-      background-color: #f53327;
+  .collapse_container {
+    .collapse_item {
+      .content {
+        display: flex;
+        height: 50px;
+        padding: 0 10px;
+        line-height: 50px;
+        justify-content: space-between;
+
+        .type {
+          height: 30px;
+          // display: inline;
+          border-radius: 30px;
+          color: white;
+          box-sizing: border-box;
+          margin-top: 10px;
+          line-height: 30px;
+          padding: 0 10px;
+        }
+
+        .chuyulaji {
+          background-color: #5dab46;
+        }
+
+        .qitalaji {
+          background-color: #747371;
+        }
+
+        .kehuishouwu {
+          background-color: #0168b7;
+        }
+
+        .youhailaji {
+          background-color: #f53327;
+        }
+      }
     }
   }
-}
-}
-// 处理抽屉内容滚动
-.scroll-view-box {
-	flex: 1;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-}
+
+  // 处理抽屉内容滚动
+  .scroll-view-box {
+    flex: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 </style>
