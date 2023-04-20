@@ -6,13 +6,9 @@
       "path": "pages/test/test"
     }, {
       "path": "pages/cate/cate"
-    }, {
-      "path": "pages/my/my"
-      // "style": {
-      //   "navigationBarTitleText": "",
-      //   "enablePullDownRefresh": false
-      // }
-    }, {
+    },{
+            "path" : "pages/game/game"
+        }, {
       "path": "pages/home/search/search"
       // "style" :                                                                                    
       // {
@@ -23,12 +19,18 @@
     }
       ,{
             "path" : "pages/webview/webview"
-            // "style" :                                                                                    
-            // {
-            //     "navigationBarTitleText": "",
-            //     "enablePullDownRefresh": false
-            // }
             
+        }
+        ,{
+            "path" : "pages/test/score/score"
+            
+        }
+        
+        ,{
+            "path" : "pages/game/gameDetail/gameDetail"
+        }
+        ,{
+            "path" : "pages/game/gameResult/gameResult"
         }
     ],
   "tabBar": { //底部tabBar 
@@ -49,10 +51,10 @@
       "iconPath": "static/picture/博士帽1.png",
       "selectedIconPath": "static/picture/博士帽 (2).png"
     }, {
-      "pagePath": "pages/my/my",
-      "text": "我的",
-      "iconPath": "static/picture/my.png",
-      "selectedIconPath": "static/picture/my-active.png"
+      "pagePath": "pages/game/game",
+      "text": "记忆",
+      "iconPath": "static/picture/记忆 (1).png",
+      "selectedIconPath": "static/picture/记忆-copy.png"
     }]
   },
   "globalStyle": {

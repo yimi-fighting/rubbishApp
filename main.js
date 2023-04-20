@@ -15,6 +15,20 @@ $http.beforeRequest=function(options){
 
 // 请求后隐藏loading
 $http.afterRequest=function(res){
+  uni.getSystemInfo({
+    success: function(res) {
+      if (res.isLoading) {
+        console.log('当前页面正在加载中...')
+        uni.hideLoading()
+      } else {
+        console.log('当前页面未处于加载状态')
+         // uni.hideLoading()
+      }
+    },
+    fail: function(res) {
+      console.log('获取页面状态信息失败')
+    }
+  })
   uni.hideLoading()
 }
 

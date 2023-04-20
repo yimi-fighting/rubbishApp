@@ -1,5 +1,19 @@
 <template>
   <view>
+    <div class="title" v-if="msg==='厨余垃圾'">
+      厨余垃圾
+      <i class="iconfont icon-chuyulaji-yugu"></i>
+    </div> <div class="title" v-else-if="msg==='可回收物'">
+     可回收物
+     <i class="iconfont icon-kehuishou"></i>
+    </div><div class="title" v-else-if="msg==='其他垃圾'">
+     其他垃圾
+     <i class="iconfont icon-qitalaji-yantou"></i>
+    </div><div class="title" v-else-if="msg==='有害垃圾'">
+     有害垃圾
+     <i class="iconfont icon-youhailaji-xudianchi"></i>
+    </div>
+  
     <div class="list" v-for="(item,index) in list" :key="index">
       <div :class="[index%2==0? 'odd':'even']" @click="active(item)">{{item.name}}</div>
     </div>
@@ -21,6 +35,7 @@
   import {typeToClass} from '../../tool/index.js'
   export default {
     name: "list",
+    props:['msg'],
     data() {
       const list=this.$store.state.list
       // console.log('2131231',list);
@@ -31,6 +46,7 @@
         list:new_list ,
         // isActive: false,
         active_item: '',
+        
       };
     },
     methods: {
@@ -44,6 +60,22 @@
 </script>
 
 <style lang="scss" scoped>
+  .title{
+    display: flex;
+    background-color: #f0f0f0;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    padding-left: 10px;
+    .iconfont{
+      font-size: 30px;
+      margin-left: 10px;
+    }
+  }
   .list {
     padding: 0 10px;
 
