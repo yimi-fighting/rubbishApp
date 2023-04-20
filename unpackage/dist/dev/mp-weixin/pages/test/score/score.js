@@ -203,49 +203,7 @@ var _default = {
   data: function data() {
     return {
       score: 0,
-      answer: [
-        //   {
-        //   name:'土豆',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'厨余垃圾',
-        // }, {
-        //   name:'土豆2',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'有害垃圾',
-        // }, {
-        //   name:'土豆3',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'其他垃圾',
-        // }, {
-        //   name:'土豆4',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'可回收物',
-        // },   {
-        //   name:'土豆5',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'厨余垃圾',
-        // }, {
-        //   name:'土豆6',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'有害垃圾',
-        // }, {
-        //   name:'土豆7',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'其他垃圾',
-        // }, {
-        //   name:'土豆8',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'可回收物',
-        // },{
-        //   name:'土豆9',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'其他垃圾',
-        // }, {
-        //   name:'土豆10',
-        //   answer:'其他垃圾',
-        //   yourAnswer:'可回收物',
-        // },
-      ]
+      answer: []
     };
   },
   methods: {

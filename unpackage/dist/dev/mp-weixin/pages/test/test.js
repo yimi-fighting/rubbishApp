@@ -267,7 +267,7 @@ var _default = {
       this.timer = setTimeout(function () {
         // 判断位于那个垃圾桶上
         _this.judgeBin(dragRect, item);
-      }, 500);
+      }, 300);
     },
     // 判断垃圾位于那个垃圾桶上
     judgeBin: function judgeBin(dragRect, item) {
@@ -287,12 +287,20 @@ var _default = {
     },
     // 答题后的操作
     setAnswer: function setAnswer(answer, item) {
-      // 将答案放入answerlist数组中
-      this.answerList.push({
-        name: item.val,
-        answer: item.class,
-        yourAnswer: answer
+      var flag = false;
+      this.answerList.map(function (e) {
+        if (e.name === item.name) {
+          flag = true;
+        }
       });
+      if (!flag) {
+        // 将答案放入answerlist数组中
+        this.answerList.push({
+          name: item.val,
+          answer: item.class,
+          yourAnswer: answer
+        });
+      }
       // 将卡片从questionlist中移除
       this.questionList = this.questionList.filter(function (e) {
         return e.key !== item.key;
@@ -337,7 +345,7 @@ var _default = {
               case 3:
                 _this2.questionList = _context2.sent;
                 // 根据type向对象中添加中文的class
-                _this2.questionList = (0, _index2.typeToClass)(_this2.questionList);
+                _this2.questionList = (0, _index2.keyToClass)(_this2.questionList);
                 console.log('123456', _this2.questionList);
                 // 随机给卡片添加x和y
                 _this2.questionList = (0, _index2.setXY)(_this2.questionList);

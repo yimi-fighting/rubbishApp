@@ -38,7 +38,7 @@
     getQuestions
   } from '../../api/index.js'
   import {
-    typeToClass,
+    keyToClass,
     setXY
   }
   from '../../tool/index.js'
@@ -107,7 +107,7 @@
         this.timer = setTimeout(() => {
           // 判断位于那个垃圾桶上
           this.judgeBin(dragRect, item)
-        }, 500)
+        }, 300)
       },
       // 判断垃圾位于那个垃圾桶上
       judgeBin(dragRect, item) {
@@ -147,12 +147,20 @@
       },
       // 答题后的操作
       setAnswer(answer, item) {
-        // 将答案放入answerlist数组中
-        this.answerList.push({
-          name: item.val,
-          answer: item.class,
-          yourAnswer: answer,
+        let flag=false
+        this.answerList.map(e=>{
+          if(e.name===item.name){
+            flag=true
+          }
         })
+       if(!flag){
+         // 将答案放入answerlist数组中
+         this.answerList.push({
+           name: item.val,
+           answer: item.class,
+           yourAnswer: answer,
+         })
+       }
         // 将卡片从questionlist中移除
         this.questionList = this.questionList.filter(e => {
           return e.key !== item.key
@@ -168,7 +176,7 @@
         })
         this.questionList = await Promise.all(arr)
         // 根据type向对象中添加中文的class
-        this.questionList = typeToClass(this.questionList)
+        this.questionList = keyToClass(this.questionList)
 
         console.log('123456', this.questionList);
         // 随机给卡片添加x和y
@@ -214,7 +222,6 @@
     async mounted() {
       // 获取垃圾桶的位置信息
       this.chuyulaji = await this.getBinLocation('chuyulaji')
-      // console.log('1111',this.chuyulaji);
       this.kehuishoulaji = await this.getBinLocation('kehuishoulaji')
       this.youhailaji = await this.getBinLocation('youhailaji')
       this.qitalaji = await this.getBinLocation('qitalaji')

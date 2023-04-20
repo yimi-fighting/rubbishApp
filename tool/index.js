@@ -19,6 +19,24 @@ export function typeToClass(list) {
     }
   })
 }
+export function keyToClass(list) {
+  console.log('123',list);
+  return list.map(item => {
+    if (item.key=== 0) {
+      item.class = '可回收物'
+      return item
+    } else if (item.key=== 1) {
+      item.class = '有害垃圾'
+      return item
+    } else if (item.key=== 2) {
+      item.class = '厨余垃圾'
+      return item
+    } else {
+      item.class = '其他垃圾'
+      return item
+    }
+  })
+}
 
 export function getNewList(list) {
    // 由于item => { ... }箭头函数中使用了async关键字，异步函数会返回一个Promise对象。所以返回一个promise数组
