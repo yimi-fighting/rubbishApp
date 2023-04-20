@@ -63,5 +63,6 @@
     "navigationBarBackgroundColor": "#00cb79",
     "onReachBottomDistance": 50
   },
-  "uniIdRouter": {}
+  "uniIdRouter": {},
+  "lazyCodeLoading":"requiredComponents"
 }

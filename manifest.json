@@ -1,7 +1,7 @@
 {
-    "name" : "垃圾分类小程序",
-    "appid" : "",
-    "description" : "",
+    "name" : "智能垃圾分类",
+    "appid" : "__UNI__62B9DB0",
+    "description" : "该小程序具有拍照识别，垃圾的搜索，垃圾分类，测试您的垃圾分类水平等功能，同时还有一个增加你记忆的小游戏。",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,

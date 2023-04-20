@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/test/test",
+    "pages/cate/cate",
+    "pages/game/game",
+    "pages/home/search/search",
+    "pages/webview/webview",
+    "pages/test/score/score",
+    "pages/game/gameDetail/gameDetail",
+    "pages/game/gameResult/gameResult"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "智能垃圾分类",
+    "navigationBarBackgroundColor": "#00cb79",
+    "onReachBottomDistance": 50
+  },
+  "tabBar": {
+    "selectedColor": "#C00000",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "static/picture/home.png",
+        "selectedIconPath": "static/picture/home-active.png"
+      },
+      {
+        "pagePath": "pages/cate/cate",
+        "text": "分类",
+        "iconPath": "static/picture/cate.png",
+        "selectedIconPath": "static/picture/cate-active.png"
+      },
+      {
+        "pagePath": "pages/test/test",
+        "text": "考试",
+        "iconPath": "static/picture/博士帽1.png",
+        "selectedIconPath": "static/picture/博士帽 (2).png"
+      },
+      {
+        "pagePath": "pages/game/game",
+        "text": "记忆",
+        "iconPath": "static/picture/记忆 (1).png",
+        "selectedIconPath": "static/picture/记忆-copy.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

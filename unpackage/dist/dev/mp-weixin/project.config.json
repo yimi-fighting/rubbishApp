@@ -22,7 +22,7 @@
     "compileType": "miniprogram",
     "libVersion": "2.30.2",
     "appid": "wx1e7c344633aefdb6",
-    "projectname": "垃圾分类小程序",
+    "projectname": "智能垃圾分类",
     "condition": {
         "search": {
             "current": -1,
