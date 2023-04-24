@@ -230,9 +230,8 @@ var Card = /*#__PURE__*/function () {
 });
 var _default = {
   data: function data() {
-    var arr = new Array(10).fill({});
     return {
-      questionList: arr,
+      questionList: [],
       score: '',
       answerList: [],
       show: false,
@@ -315,6 +314,7 @@ var _default = {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
+                _this2.questionList = new Array(10).fill({});
                 arr = _this2.questionList.map( /*#__PURE__*/function () {
                   var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(item, index) {
                     var card;
@@ -340,9 +340,9 @@ var _default = {
                     return _ref.apply(this, arguments);
                   };
                 }());
-                _context2.next = 3;
+                _context2.next = 4;
                 return Promise.all(arr);
-              case 3:
+              case 4:
                 _this2.questionList = _context2.sent;
                 // 根据type向对象中添加中文的class
                 _this2.questionList = (0, _index2.keyToClass)(_this2.questionList);
@@ -350,7 +350,7 @@ var _default = {
                 // 随机给卡片添加x和y
                 _this2.questionList = (0, _index2.setXY)(_this2.questionList);
                 // this.show = true
-              case 7:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -418,14 +418,16 @@ var _default = {
               return _this4.getBinLocation('qitalaji');
             case 11:
               _this4.qitalaji = _context3.sent;
-              _this4.getques();
-            case 13:
+            case 12:
             case "end":
               return _context3.stop();
           }
         }
       }, _callee3);
     }))();
+  },
+  onShow: function onShow() {
+    this.getques();
   }
 };
 exports.default = _default;

@@ -71,9 +71,8 @@
   }
   export default {
     data() {
-      let arr = new Array(10).fill({})
       return {
-        questionList: arr,
+        questionList: [],
         score: '',
         answerList: [],
         show: false,
@@ -168,6 +167,7 @@
       },
       // 获取题目
       async getques() {
+        this.questionList=new Array(10).fill({})
         const arr = this.questionList.map(async (item, index) => {
           item = await getQuestions()
           let card = new Card(index)
@@ -220,14 +220,17 @@
       this.show = true
     },
     async mounted() {
-      // 获取垃圾桶的位置信息
+    
+ // 获取垃圾桶的位置信息
       this.chuyulaji = await this.getBinLocation('chuyulaji')
       this.kehuishoulaji = await this.getBinLocation('kehuishoulaji')
       this.youhailaji = await this.getBinLocation('youhailaji')
       this.qitalaji = await this.getBinLocation('qitalaji')
+    },
+  onShow() {
+     
       this.getques()
-
-    }
+    },
   };
 </script>
 
