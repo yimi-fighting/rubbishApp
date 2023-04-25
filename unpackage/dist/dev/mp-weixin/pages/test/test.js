@@ -315,6 +315,7 @@ var _default = {
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.questionList = new Array(10).fill({});
+                _this2.answerList = [];
                 arr = _this2.questionList.map( /*#__PURE__*/function () {
                   var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(item, index) {
                     var card;
@@ -340,9 +341,9 @@ var _default = {
                     return _ref.apply(this, arguments);
                   };
                 }());
-                _context2.next = 4;
+                _context2.next = 5;
                 return Promise.all(arr);
-              case 4:
+              case 5:
                 _this2.questionList = _context2.sent;
                 // 根据type向对象中添加中文的class
                 _this2.questionList = (0, _index2.keyToClass)(_this2.questionList);
@@ -350,7 +351,7 @@ var _default = {
                 // 随机给卡片添加x和y
                 _this2.questionList = (0, _index2.setXY)(_this2.questionList);
                 // this.show = true
-              case 8:
+              case 9:
               case "end":
                 return _context2.stop();
             }

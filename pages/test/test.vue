@@ -168,6 +168,7 @@
       // 获取题目
       async getques() {
         this.questionList=new Array(10).fill({})
+        this.answerList=[]
         const arr = this.questionList.map(async (item, index) => {
           item = await getQuestions()
           let card = new Card(index)
@@ -228,7 +229,6 @@
       this.qitalaji = await this.getBinLocation('qitalaji')
     },
   onShow() {
-     
       this.getques()
     },
   };
